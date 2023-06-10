@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Device = sequelize.define("Device",{
+    const Department = sequelize.define("Despartment",{
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -14,23 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING
         },
-        price: {
-            type: DataTypes.FLOAT
-        },
-        config: {
+        address: {
             type: DataTypes.STRING
         },
-        parent_id: {
+        device_count: {
             type: DataTypes.INTEGER
         },
         user_id: {
-            type: DataTypes.INTEGER
-        },
-        category_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        department_id: {
             type: DataTypes.INTEGER
         },
         is_active: {
@@ -42,5 +32,5 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true,
     })
 
-    return Device;
+    return Department;
 }
