@@ -54,7 +54,6 @@ async function deleted(req, res, next){
         }
         res.status(200).send(result); 
     }catch(err){
-        console.log(err);
         next(new HttpException(500, err.errors[0].message));
     }
 }
