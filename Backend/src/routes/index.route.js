@@ -1,15 +1,15 @@
 const userRouter = require('./user.route'); 
-const loginRouter = require('./auth.route');
 const categoryRouter = require('./category.route');
 const deviceRouter = require('./device.route');
 const despartmentRouter = require('./despartment.route');
+const authRouter = require('./auth.route');
 
 function combineRoute(app){
+    app.use('/api/v1/auth', authRouter);
     app.use('/api/v1/users', userRouter);
-    app.use('/login/api/v1', loginRouter);
-    app.use('/categories/api/v1', categoryRouter);
-    app.use('/device/api/v1', deviceRouter)
-    app.use('/despartment/api/v1', despartmentRouter)
+    app.use('/api/v1/categories', categoryRouter);
+    app.use('/api/v1/device', deviceRouter)
+    app.use('/api/v1/despartment', despartmentRouter)
 }
 
 module.exports = combineRoute;
