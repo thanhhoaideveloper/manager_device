@@ -6,12 +6,7 @@ const HttpException = require('../utils/httpException.util');
 async function getAll(req, res, next){
     try{
         const result = await userService.findAll();
-        const data = result.map(item => {
-            console.log(item);
-            const { password, ...data } = item;
-            return data;
-        });
-        res.status(200).send(result);
+        return res.status(200).send(result);
     }catch(err){
         next(new HttpException(500, err.errors[0].message));
     }

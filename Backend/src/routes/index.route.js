@@ -5,7 +5,7 @@ const deviceRouter = require('./device.route');
 const despartmentRouter = require('./despartment.route');
 
 function combineRoute(app){
-    app.use('/users/api/v1', userRouter);
+    app.use('/api/v1/users', userRouter);
     app.use('/login/api/v1', loginRouter);
     app.use('/categories/api/v1', categoryRouter);
     app.use('/device/api/v1', deviceRouter)
