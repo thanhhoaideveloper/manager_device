@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const UserService = require("../services/user.service");
 const { generateToken } = require("../utils/helper.util");
 const authConfig = require('../config/auth.config');
+const HttpException = require('../utils/httpException.util');
 
 exports.login = async (req, res, next) => {
     const formData = { email: req.body.email }
@@ -12,7 +13,7 @@ exports.login = async (req, res, next) => {
         });
     }
     const user = await UserService.findOne(formData);
-    if(!user.status){
+    if(!user){
         return res.status(404).send({
             message: "User not found!"
         })
@@ -21,7 +22,7 @@ exports.login = async (req, res, next) => {
     //check password
     const checkedPassword = bcrypt.compareSync(
         req.body.password,
-        user.value.password
+        user.password
     )
 
     if(!checkedPassword){
@@ -32,7 +33,7 @@ exports.login = async (req, res, next) => {
 
     //generate access token
     const dataForAccessToken = {
-        email: user.value.email
+        email: user.email
     }
     const accessToken = await generateToken(dataForAccessToken, authConfig.accessTokenSecret, authConfig.accessTokenLife);
     if(!accessToken){
@@ -41,6 +42,6 @@ exports.login = async (req, res, next) => {
 
     return res.status(200).send({
         accessToken,
-        user: user.value
+        user
     })
 }
