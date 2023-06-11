@@ -1,7 +1,9 @@
 import axiosClient from "./axosClient";
 
 const authApi = {
-    isAuth: () => {
-        return axiosClient.get('/')
+    login: (email, password) => {
+        return axiosClient.post('/auth/login', {email, password})
     }
 }
+
+export default authApi;
