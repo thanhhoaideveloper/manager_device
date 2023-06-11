@@ -5,7 +5,7 @@ exports.findOne = async (fields) => {
 }
 
 exports.findAll = async () => {
-    return await User.findAll();
+    return User.findAll();
 }
 
 exports.create = async (fromData) => {

@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
+const cors = require('cors');
 
 const HttpException = require('./src/utils/httpException.util')
 const combineRoute = require('./src/routes/index.route')
@@ -12,6 +13,7 @@ app.use(
     extended: true,
   })
 );
+app.use(cors());
 
 combineRoute(app);
 

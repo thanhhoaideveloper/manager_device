@@ -1,33 +1,29 @@
 // import in project
 import { Box, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
-import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import SecurityIcon from "@mui/icons-material/Security";
-
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchUser } from '../../store/reducer/user'
+import { Delete, Edit } from "@mui/icons-material";
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const users = useSelector(state => state.users);
+  const users = useSelector(state => state.userReducer.users);
   const dispatch = useDispatch();
-  console.log(users);
   useEffect(() => {
-
-  }, [])
+    dispatch(fetchUser())
+  }, [dispatch])
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "age", headerName: "Age", flex: 1 },
-    { field: "phone", headerName: "Phone", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
     {
       field: "access",
       headerName: "Access",
@@ -45,18 +41,34 @@ const Users = () => {
             padding="5px"
             width="100px"
           >
-            {params.row.access === "user" && <PersonIcon />}
-            {params.row.access === "admin" && <AdminPanelSettingsIcon />}
-            {params.row.access === "manager" && <SecurityIcon />}
+            {!params.row.is_admin && <PersonIcon />}
+            {params.row.is_admin && <AdminPanelSettingsIcon />}
             <Typography>
-              {params.row.access === "user" && "User"}
-              {params.row.access === "admin" && "Admin"}
-              {params.row.access === "manager" && "Manager"}
+              {!params.row.is_admin && "User"}
+              {params.row.is_admin && "Admin"}
             </Typography>
           </Box>
         );
       },
     },
+    {
+      field: 'actions',
+      type: 'actions',
+      width: 50,
+      getActions: (params) => [
+        <GridActionsCellItem 
+          icon = {<Edit />}
+          label="Edit"
+          showInMenu
+        />,
+        <GridActionsCellItem 
+          icon={<Delete />}
+          label="Delete"
+          // onClick={}
+          showInMenu
+        />
+      ]
+    }
   ];
 
   return (
@@ -94,7 +106,7 @@ const Users = () => {
         }}
       >
         <DataGrid 
-          rows={mockDataTeam} 
+          rows={users} 
           columns={columns}
           components={{
             Toolbar: GridToolbar,
