@@ -1,9 +1,15 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from '@mui/icons-material/Group';
+import DeviceHubIcon from '@mui/icons-material/DeviceHub';
+import OnDeviceTrainingIcon from '@mui/icons-material/OnDeviceTraining';
+import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 
 const menu = [
   { title: "Dashboard", path: "/", icon: <DashboardIcon /> },
-  { title: "Manage Users", path: "/users", icon: <GroupIcon /> },
+  { title: "Người Dùng", path: "/users", icon: <GroupIcon /> },
+  { title: "Phòng Ban", path: "/users", icon: <CameraIndoorIcon /> },
+  { title: "Thiết Bị", path: "/devices", icon: <DeviceHubIcon /> },
+  { title: "Loại Thiết Bị", path: "/users", icon: <OnDeviceTrainingIcon /> },
   // {
   //   title: "Constacts Informations",
   //   path: "/contact",

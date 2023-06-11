@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard";
 import Sidebar from "./pages/global/Sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import Users from "./pages/users";
+import Devices from "./pages/devices";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -24,6 +25,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/devices" element={<Devices />} />
                 {/* <Route path="/contact" element={<Contact />} />
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path="/form" element={<Profile />} />

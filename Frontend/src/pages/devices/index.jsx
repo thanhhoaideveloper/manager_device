@@ -1,30 +1,35 @@
 // import in project
 import { Box, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
+import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
-import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import SecurityIcon from "@mui/icons-material/Security";
+
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchUser } from '../../store/reducer/user'
-import { Delete, Edit } from "@mui/icons-material";
 import TableUI from '../../components/Table/index'
 
-const Users = () => {
+
+const Devices = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const users = useSelector(state => state.userReducer.users);
+  const users = useSelector(state => state.users);
   const dispatch = useDispatch();
+  console.log(users);
   useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+
+  }, [])
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
+    { field: "age", headerName: "Age", flex: 1 },
+    { field: "phone", headerName: "Phone", flex: 1 },
     {
       field: "access",
       headerName: "Access",
@@ -42,40 +47,23 @@ const Users = () => {
             padding="5px"
             width="100px"
           >
-            {!params.row.is_admin && <PersonIcon />}
-            {params.row.is_admin && <AdminPanelSettingsIcon />}
+            {params.row.access === "user" && <PersonIcon />}
+            {params.row.access === "admin" && <AdminPanelSettingsIcon />}
+            {params.row.access === "manager" && <SecurityIcon />}
             <Typography>
-              {!params.row.is_admin && "User"}
-              {params.row.is_admin && "Admin"}
+              {params.row.access === "user" && "User"}
+              {params.row.access === "admin" && "Admin"}
+              {params.row.access === "manager" && "Manager"}
             </Typography>
           </Box>
         );
       },
     },
-    {
-      field: 'actions',
-      type: 'actions',
-        headerName: "Actions",
-      width: 100,
-      getActions: (params) => [
-        <GridActionsCellItem 
-          icon = {<Edit />}
-          label="Edit"
-          showInMenu
-        />,
-        <GridActionsCellItem 
-          icon={<Delete />}
-          label="Delete"
-          // onClick={}
-          showInMenu
-        />
-      ]
-    }
   ];
 
   return (
     <Box m="10px">
-      <Header title="Users" subtitle="Manager Users" />
+      <Header title="Devices" subtitle="" />
       <Box 
         height="75vh"
         sx={{
@@ -108,7 +96,7 @@ const Users = () => {
         }}
       >
           <TableUI
-              rows={users}
+              rows={mockDataTeam}
               columns={columns}
           />
       </Box>
@@ -116,4 +104,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Devices;
