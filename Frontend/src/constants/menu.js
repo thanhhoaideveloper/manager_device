@@ -9,7 +9,7 @@ const menu = [
   { title: "Người Dùng", path: "/users", icon: <GroupIcon /> },
   { title: "Phòng Ban", path: "/users", icon: <CameraIndoorIcon /> },
   { title: "Thiết Bị", path: "/devices", icon: <DeviceHubIcon /> },
-  { title: "Loại Thiết Bị", path: "/users", icon: <OnDeviceTrainingIcon /> },
+  { title: "Loại Thiết Bị", path: "/categories", icon: <OnDeviceTrainingIcon /> },
   // {
   //   title: "Constacts Informations",
   //   path: "/contact",
