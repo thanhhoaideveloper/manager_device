@@ -15,7 +15,7 @@ async function getAll(req, res, next){
 
 async function getOne(req, res, next){
     try{
-        const { id } = req.params.id;
+        const { id } = req.params;
         const result = await userService.findOne({id});
         res.status(200).send(result);
     }catch(err){
@@ -30,8 +30,7 @@ async function create(req, res, next){
             formData.password = bcrypt.hashSync(formData.password, 10);
         }
         const result = await userService.create(formData);
-        const { password, ...data } = result;
-        res.status(201).send(data);
+        res.status(201).send(result);
     }catch(err){
         next(new HttpException(500, err.errors[0].message))
     }
@@ -41,8 +40,8 @@ async function update(req, res, next){
     try{
         const formData = req.body;
         const { id } = req.params;
-        const result = userService.update(id,formData);
-        const userUpdate = userService.findOne({ id });
+        await userService.updated(id,formData);
+        const userUpdate = await userService.findOne({ id });
         if(!userUpdate){
             return next(new HttpException(404, "User not found!"));
         }

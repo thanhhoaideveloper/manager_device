@@ -32,7 +32,7 @@ const Despartment = despartmentModel(sequelize, DataTypes);
 Device.belongsToMany(Despartment, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "despartment_id"});
 Despartment.belongsToMany(Device, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "device_id" });
 
-sequelize.sync({ force: true }).then(()=>{
+sequelize.sync({ force: false }).then(()=>{
   console.log('Connect DB successfully!')
 })
 
