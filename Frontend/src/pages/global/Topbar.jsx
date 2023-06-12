@@ -4,16 +4,25 @@ import { Box, IconButton, InputBase, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   DarkModeOutlined,
+  ExitToApp,
   LightModeOutlined,
   NotificationsOutlined,
   PersonOutlineSharp,
   SettingsOutlined,
 } from "@mui/icons-material";
 
+import { useDispatch } from 'react-redux';
+import { logout } from "../../store/reducer/auth";
+
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  }
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
@@ -47,6 +56,9 @@ const Topbar = () => {
         </IconButton>
         <IconButton>
           <PersonOutlineSharp />
+        </IconButton>
+        <IconButton onClick={handleLogout}>
+          <ExitToApp />
         </IconButton>
       </Box>
     </Box>
