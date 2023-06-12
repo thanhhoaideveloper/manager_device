@@ -12,3 +12,7 @@ export const removeLocalStorage = () => {
 export const getLocalStorage = (field) => {
     return JSON.parse(localStorage.getItem(field));
 }
+
+export const isAdmin = (currentUser) => {
+    return currentUser.is_admin === 1;
+}
