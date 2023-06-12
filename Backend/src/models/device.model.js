@@ -30,9 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        department_id: {
-            type: DataTypes.INTEGER
-        },
         is_active: {
             type: DataTypes.INTEGER,
             defaultValue: 1
