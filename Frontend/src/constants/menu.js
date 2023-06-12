@@ -7,7 +7,7 @@ import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 const menu = [
   { title: "Dashboard", path: "/", icon: <DashboardIcon /> },
   { title: "Người Dùng", path: "/users", icon: <GroupIcon /> },
-  { title: "Phòng Ban", path: "/users", icon: <CameraIndoorIcon /> },
+  { title: "Phòng Ban", path: "/departments", icon: <CameraIndoorIcon /> },
   { title: "Thiết Bị", path: "/devices", icon: <DeviceHubIcon /> },
   { title: "Loại Thiết Bị", path: "/categories", icon: <OnDeviceTrainingIcon /> },
   // {

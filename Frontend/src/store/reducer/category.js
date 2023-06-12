@@ -1,5 +1,7 @@
 import categoryApi from '../../apis/categoryApi';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import notify from "../../utils/notification";
+import _ from 'lodash';
 
 const initialState = {
     categoryApi: []
@@ -9,7 +11,29 @@ export const fetchCategory = createAsyncThunk(
     "categoryApi",
     async () => {
         const data = await categoryApi.getListCategories();
-        return data;
+        let index = 1;
+        let list = [];
+        if(_.size(data) > 0){
+            list = data.map((item) => {
+                let _item = {index: index, ...item}
+                index++;
+                return _item;
+            })
+        };
+        return list;
+    }
+)
+
+export const create = createAsyncThunk(
+    "categoryApi",
+    async (body) => {
+        try {
+            const data = await categoryApi.create(body);
+            notify.success('Thêm thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Thêm thất bại')
+        }
     }
 )
 

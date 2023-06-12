@@ -11,14 +11,16 @@ async function getAll(req, res) {
 }
 
 async function create(req, res) {
-    const { code, name, is_active } = req.body;
-    const { status, value } = await categoryService.create({code, name, is_active});
-    if(!status){
-        res.status(500).send({
-            message: value
-        })
-    }
-    res.status(201).send(value);
+   try {
+       const { code, name, is_active } = req.body;
+       const { status, value } = await categoryService.create({code, name, is_active});
+       if(!status){
+           res.status(500).send({
+               message: value
+           })
+       }
+       res.status(201).send(value);
+   } catch (e) {}
 }
 
 async function findOne(req, res){

@@ -28,7 +28,7 @@ const Categories = (props) => {
 
 
     const columns = [
-        { field: "id", headerName: "ID", flex: 1 },
+        { field: "index", headerName: "STT", flex: 1 },
         { field: "name", headerName: "Name", flex: 1 },
         { field: "code", headerName: "Code", flex: 1 },
         {
@@ -71,6 +71,7 @@ const Categories = (props) => {
             getActions: (params) => [
                 <ModalSubCategory
                     data = {params.row  }
+                    dispatch = {dispatch}
                 />
             ]
         }
@@ -110,10 +111,13 @@ const Categories = (props) => {
                     },
                 }}
             >
-                <ModalSubCategory/>
+                <ModalSubCategory
+                    dispatch = {dispatch}
+                />
                 <TableUI
                     rows={categories}
                     columns={columns}
+                    dispatch={dispatch}
                 />
             </Box>
         </Box>

@@ -8,13 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
-import authApi from "../../../apis/authApi";
 
-import {create, fetchCategory} from '../../../store/reducer/category'
-import {login} from "../../../store/reducer/auth";
-
-const ModalSubCategory = (props) => {
-    const {onClose, scroll='paper', data, dispatch} = props;
+const ModalSubDevices = (props) => {
+    const {onClose, scroll='paper', data} = props;
     const [isOpen, setIsOpen] = useState(false)
     const formik = useFormik({
         initialValues : {
@@ -31,11 +27,8 @@ const ModalSubCategory = (props) => {
         }
     })
 
-    const handleSubmitForm = async (props) => {
-
-        await dispatch(create({...props}));
-        dispatch(fetchCategory()) // load lạo table
-        console.log('test', data)
+    const handleSubmitForm = (props) => {
+        console.log('test', props)
     }
 
     const handleOpen = () => {
@@ -142,4 +135,4 @@ const ModalSubCategory = (props) => {
     );
 };
 
-export default ModalSubCategory;
+export default ModalSubDevices;

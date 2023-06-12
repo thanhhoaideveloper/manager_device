@@ -8,40 +8,36 @@ import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
-import authApi from "../../../apis/authApi";
 
-import {create, fetchCategory} from '../../../store/reducer/category'
-import {login} from "../../../store/reducer/auth";
-
-const ModalSubCategory = (props) => {
-    const {onClose, scroll='paper', data, dispatch} = props;
+const ModalSubDevices = (props) => {
+    const {onClose, scroll='paper', data} = props;
     const [isOpen, setIsOpen] = useState(false)
     const formik = useFormik({
         initialValues : {
             code : '',
             name : '',
+            address : '',
             is_active : false,
         },
         validationSchema : Yup.object({
             code: Yup.string().required("Required").max(255, "Code must be at most 255 characters"),
             name: Yup.string().required("Required").max(255, "Name must be at most 255 characters"),
+            address: Yup.string().required("Required").max(255, "Name must be at most 255 characters"),
         }),
         onSubmit : (values) =>{
             handleSubmitForm(values);
         }
     })
 
-    const handleSubmitForm = async (props) => {
-
-        await dispatch(create({...props}));
-        dispatch(fetchCategory()) // load lạo table
-        console.log('test', data)
+    const handleSubmitForm = (props) => {
+        console.log('test', props)
     }
 
     const handleOpen = () => {
         if(data){
             formik.setFieldValue('name',data.name)
             formik.setFieldValue('code',data.code)
+            formik.setFieldValue('address',data.address)
             formik.setFieldValue('is_active',data.is_active)
 
         }
@@ -118,6 +114,17 @@ const ModalSubCategory = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
+                                <TextField
+                                    name="address"
+                                    label="address"
+                                    fullWidth
+                                    value = {formik.values.address}
+                                    onChange={formik.handleChange}
+                                    error={!!(formik.touched.address && formik.errors.address)}
+                                    helperText={formik.errors.address && formik.touched.address ? formik.errors.address : null}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
                                 <FormControlLabel
                                     control={
                                         <Switch
@@ -142,4 +149,4 @@ const ModalSubCategory = (props) => {
     );
 };
 
-export default ModalSubCategory;
+export default ModalSubDevices;
