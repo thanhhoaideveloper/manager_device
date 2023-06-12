@@ -2,11 +2,11 @@ import categoryApi from '../../apis/categoryApi';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    categories: []
+    categoryApi: []
 }
 
 export const fetchCategory = createAsyncThunk(
-    "categories",
+    "categoryApi",
     async () => {
         const data = await categoryApi.getListCategories();
         return data;
@@ -18,7 +18,7 @@ const category = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder.addCase(fetchCategory.fulfilled, (state, action) => {
-            state.categories = action.payload;
+            state.categoryApi = action.payload;
         })
     }
 })

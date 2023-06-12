@@ -5,17 +5,19 @@ import { tokens } from "../../theme";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchUser } from '../../store/reducer/user'
 import { Delete, Edit } from "@mui/icons-material";
 import TableUI from '../../components/Table/index'
+import ModalSubUser from "./subComponent";
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const users = useSelector(state => state.userReducer.users);
+    console.log('users',users)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser())
@@ -56,19 +58,11 @@ const Users = () => {
       field: 'actions',
       type: 'actions',
         headerName: "Actions",
-      width: 100,
+      width: 150,
       getActions: (params) => [
-        <GridActionsCellItem 
-          icon = {<Edit />}
-          label="Edit"
-          showInMenu
-        />,
-        <GridActionsCellItem 
-          icon={<Delete />}
-          label="Delete"
-          // onClick={}
-          showInMenu
-        />
+          <ModalSubUser
+              data = {params.row  }
+          />
       ]
     }
   ];
@@ -107,6 +101,7 @@ const Users = () => {
           },
         }}
       >
+          <ModalSubUser/>
           <TableUI
               rows={users}
               columns={columns}

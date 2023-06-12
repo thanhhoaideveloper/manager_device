@@ -1,5 +1,5 @@
 // import in project
-import {Box, Button, Typography, useTheme} from "@mui/material";
+import {Box, Button, Typography, useTheme, Chip} from "@mui/material";
 import Header from "../../components/Header";
 import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
@@ -9,10 +9,9 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SecurityIcon from "@mui/icons-material/Security";
 import { fetchCategory } from '../../store/reducer/category'
 
-
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import moment from 'moment';
 import TableUI from '../../components/Table/index'
 import {Delete, Edit} from "@mui/icons-material";
 import ModalSubCategory from "./subComponent";
@@ -21,7 +20,7 @@ import ModalSubCategory from "./subComponent";
 const Categories = (props) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const categories = useSelector(state => state.categoryReducer.categories);
+    const categories = useSelector(state => state.categoryReducer.categoryApi);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchCategory())
@@ -31,34 +30,36 @@ const Categories = (props) => {
     const columns = [
         { field: "id", headerName: "ID", flex: 1 },
         { field: "name", headerName: "Name", flex: 1 },
-        { field: "age", headerName: "Age", flex: 1 },
-        { field: "phone", headerName: "Phone", flex: 1 },
+        { field: "code", headerName: "Code", flex: 1 },
         {
-            field: "access",
-            headerName: "Access",
+            field: "is_active",
+            headerName: "Active",
             flex: 1,
             renderCell: (params) => {
                 return (
-                    <Box
-                        sx={{
-                            backgroundColor: colors.greenAccent[600],
-                            borderRadius: "5px",
-                        }}
-                        display="flex"
-                        justifyContent="center"
-                        alignContent="center"
-                        padding="5px"
-                        width="100px"
-                    >
-                        {params.row.access === "user" && <PersonIcon />}
-                        {params.row.access === "admin" && <AdminPanelSettingsIcon />}
-                        {params.row.access === "manager" && <SecurityIcon />}
-                        <Typography>
-                            {params.row.access === "user" && "User"}
-                            {params.row.access === "admin" && "Admin"}
-                            {params.row.access === "manager" && "Manager"}
-                        </Typography>
-                    </Box>
+                    <Chip size="small"  label={params.row.is_active ? 'active' : 'no active'} color={params.row.is_active ? 'success' : 'error'} />
+                );
+            },
+        },
+        { field: "createdAt", headerName: "createdAt", flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography>
+                        {
+                            moment(params.row.createdAt).format('DD/MM/YYYY')
+                        }
+                    </Typography>
+                );
+            },
+        },
+        { field: "updatedAt", headerName: "UpdatedAt", flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography>
+                        {
+                            moment(params.row.updatedAt).format('DD/MM/YYYY')
+                        }
+                    </Typography>
                 );
             },
         },
@@ -111,7 +112,7 @@ const Categories = (props) => {
             >
                 <ModalSubCategory/>
                 <TableUI
-                    rows={mockDataTeam}
+                    rows={categories}
                     columns={columns}
                 />
             </Box>
