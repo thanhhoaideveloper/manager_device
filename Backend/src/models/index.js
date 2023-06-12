@@ -7,18 +7,19 @@ const userModel = require('./user.model');
 const categoryModel = require('./category.model');
 const deviceModel = require('./device.model');
 const despartmentModel = require('./department.model');
-const despartmentDeviceModel = require('./deviceDepartment.model');
+const deviceDespartmentModel = require('./deviceDepartment.model');
+
 const sequelize = new Sequelize(process.env.DATABASE, dbConfig.user, dbConfig.password, {
   host: dbConfig.host,
   dialect: 'mysql',
   logging: false
 })
 
+const DeviceDepartment = deviceDespartmentModel(sequelize, DataTypes);
 const User = userModel(sequelize, DataTypes);
 const Category = categoryModel(sequelize, DataTypes);
 const Device = deviceModel(sequelize, DataTypes);
-const Department = despartmentModel(sequelize, DataTypes);
-const DepartMentDevice = despartmentDeviceModel(sequelize, DataTypes);
+const Despartment = despartmentModel(sequelize, DataTypes);
 
 //default User
 // User.bulkCreate([{
@@ -28,10 +29,10 @@ const DepartMentDevice = despartmentDeviceModel(sequelize, DataTypes);
 // }])
 
 //relationship
-Device.belongsToMany(Department, { through: 'DepartMentDevice' });
-Department.belongsToMany(Device, { through: 'DepartMentDevice' });
+Device.belongsToMany(Despartment, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "despartment_id"});
+Despartment.belongsToMany(Device, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "device_id" });
 
-sequelize.sync({ force: false }).then(()=>{
+sequelize.sync({ force: true }).then(()=>{
   console.log('Connect DB successfully!')
 })
 
@@ -39,7 +40,7 @@ module.exports = {
   User,
   Category,
   Device,
-  Department,
-  DepartMentDevice
+  Despartment,
+  DeviceDepartment
 }
 
