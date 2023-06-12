@@ -1,28 +1,33 @@
 import React, {useState} from "react";
-import { Modal, Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
-import { Field, Form, ErrorMessage, useFormik } from "formik";
+import { Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { createUser, updateUser } from "../../../store/reducer/user";
+import { isAdmin } from "../../../utils";
 
 const ModalSubUser = (props) => {
+    const currentUser = useSelector(state => state.authReducer.currentUser);
+
     const {onClose, scroll='paper', data} = props;
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
     const formik = useFormik({
         initialValues : {
             email : '',
             name : '',
             password : '',
-            is_admin : false,
+            is_admin : 1,
         },
         validationSchema : Yup.object({
             name: Yup.string().required("vui lòng nhập name").max(255, "Name must be at most 255 characters"),
             email: Yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
-            password: Yup.string()
+            password: !data && Yup.string()
                 .required('Vui lòng nhập mật khẩu')
                 .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
                 .matches(
@@ -31,12 +36,22 @@ const ModalSubUser = (props) => {
                 ),
         }),
         onSubmit : (values) =>{
-            handleSubmitForm(values);
+            if(data){
+                handleChangeForm(values);
+            }else{
+                handleSubmitForm(values);
+            }
         }
     })
 
-    const handleSubmitForm = (props) => {
-        console.log('test', props)
+    const handleSubmitForm = async (props) => {
+        await dispatch(createUser(props));
+        setIsOpen(false);
+    }
+
+    const handleChangeForm = async (props) => {
+        await dispatch(updateUser({id: data.id, formData: props}));
+        setIsOpen(false);
     }
 
     const handleOpen = () => {
@@ -53,6 +68,10 @@ const ModalSubUser = (props) => {
     const handleClose = () => {
         formik.handleReset();
         setIsOpen(false)
+    }
+
+    const handleSwicth = (e) => {
+        formik.setFieldValue('is_admin',formik.values.is_admin == 1 ? 0 : 1);
     }
 
     return (
@@ -113,6 +132,7 @@ const ModalSubUser = (props) => {
                                     name="email"
                                     label="email"
                                     fullWidth
+                                    disabled={ data ? true : false}
                                     value = {formik.values.email}
                                     onChange={formik.handleChange}
                                     error={!!(formik.touched.email && formik.errors.email)}
@@ -120,23 +140,26 @@ const ModalSubUser = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField
-                                    name="password"
-                                    label="password"
-                                    fullWidth
-                                    value = {formik.values.password}
-                                    onChange={formik.handleChange}
-                                    error={!!(formik.touched.password && formik.errors.password)}
-                                    helperText={formik.errors.password && formik.touched.password ? formik.errors.password : null}
-                                />
+                                {!data && (
+                                    <TextField
+                                        name="password"
+                                        label="password"
+                                        fullWidth
+                                        disabled={ data ? true : false}
+                                        value = {formik.values.password}
+                                        onChange={formik.handleChange}
+                                        error={!!(formik.touched.password && formik.errors.password)}
+                                        helperText={formik.errors.password && formik.touched.password ? formik.errors.password : null}
+                                    />
+                                )}
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     control={
                                         <Switch
                                             name="is_admin"
-                                            checked={formik.values.is_admin}
-                                            onChange={formik.handleChange}
+                                            checked={formik.values.is_admin === 1 ? true: false}
+                                            onChange={handleSwicth}
                                             color="primary"
                                         />
                                     }
@@ -147,8 +170,13 @@ const ModalSubUser = (props) => {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color={'error'} onClick={handleClose}>Cancel</Button>
-                    <Button variant="contained" color={'success'} onClick={formik.handleSubmit}>Save</Button>
+                    { isAdmin(currentUser) && (
+                        <>
+                        <Button variant="contained" color={'error'} onClick={handleClose}>Cancel</Button>
+                        <Button variant="contained" color={'success'} onClick={formik.handleSubmit}>Save</Button>
+                        </>
+                    )}
+                    
                 </DialogActions>
             </Dialog>
         </>

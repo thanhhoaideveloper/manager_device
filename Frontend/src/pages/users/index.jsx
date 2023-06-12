@@ -17,7 +17,6 @@ const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const users = useSelector(state => state.userReducer.users);
-    console.log('users',users)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser())
