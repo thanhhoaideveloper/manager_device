@@ -16,6 +16,7 @@ import TableUI from '../../components/Table/index'
 import ModalSubCategory from "../categories/subComponent";
 import ModalSubDevices from "./subComponent";
 import {fetchDevice} from "../../store/reducer/device";
+import moment from "moment/moment";
 
 
 const Devices = () => {
@@ -29,10 +30,33 @@ const Devices = () => {
     }, [])
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
-    { field: "name", headerName: "Name", flex: 1 },
-    { field: "age", headerName: "Age", flex: 1 },
-    { field: "phone", headerName: "Phone", flex: 1 },
+    { field: "index", headerName: "Index", flex: 1 },
+      { field: "name", headerName: "name", flex: 1 },
+    { field: "code", headerName: "code", flex: 1 },
+    { field: "config", headerName: "config", flex: 1 },
+    { field: "price", headerName: "price", flex: 1 },
+      { field: "createdAt", headerName: "createdAt", flex: 1,
+          renderCell: (params) => {
+              return (
+                  <Typography>
+                      {
+                          moment(params.row.createdAt).format('DD/MM/YYYY')
+                      }
+                  </Typography>
+              );
+          },
+      },
+      { field: "updatedAt", headerName: "UpdatedAt", flex: 1,
+          renderCell: (params) => {
+              return (
+                  <Typography>
+                      {
+                          moment(params.row.updatedAt).format('DD/MM/YYYY')
+                      }
+                  </Typography>
+              );
+          },
+      },
       {
           field: 'actions',
           type: 'actions',
@@ -82,7 +106,7 @@ const Devices = () => {
       >
           <ModalSubDevices/>
           <TableUI
-              rows={mockDataTeam}
+              rows={devices}
               columns={columns}
           />
       </Box>

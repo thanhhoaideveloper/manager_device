@@ -1,5 +1,6 @@
 import deviceApi from '../../apis/device';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import _ from "lodash";
 
 const initialState = {
     devices: []
@@ -8,9 +9,17 @@ const initialState = {
 export const fetchDevice = createAsyncThunk(
     "devices",
     async () => {
-        console.log('tets')
         const data = await deviceApi.getListDevice();
-        return data;
+        let index = 1;
+        let list = [];
+        if(_.size(data) > 0){
+            list = data.map((item) => {
+                let _item = {index: index, ...item}
+                index++;
+                return _item;
+            })
+        };
+        return list;
     }
 )
 

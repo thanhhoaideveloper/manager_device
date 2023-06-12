@@ -37,6 +37,32 @@ export const create = createAsyncThunk(
     }
 )
 
+export const update = createAsyncThunk(
+    "categoryApi",
+    async (body) => {
+        try {
+            const data = await categoryApi.update(body);
+            notify.success('Sửa thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Sửa thất bại')
+        }
+    }
+)
+
+export const deleteApi = createAsyncThunk(
+    "categoryApi",
+    async (body) => {
+        try {
+            const data = await categoryApi.deleteApi(body);
+            notify.success('Xóa thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Xóa thất bại')
+        }
+    }
+)
+
 const category = createSlice({
     name: "category",
     initialState,

@@ -71,6 +71,9 @@ const ModalSubDevices = (props) => {
                 scroll={scroll}
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
+
+
+
                 // fullScreen = {fullScreen}
                 maxWidth = {'sm'}
                 fullWidth = {false}
