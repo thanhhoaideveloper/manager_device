@@ -8,52 +8,37 @@ import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
-import authApi from "../../../apis/authApi";
 
-import {create, fetchCategory,update, deleteApi} from '../../../store/reducer/category'
-import {login} from "../../../store/reducer/auth";
-
-const ModalSubCategory = (props) => {
-    const {onClose, scroll='paper', data, dispatch} = props;
-    const checkFormUpdate = data ? true : false;
+const ModalSubDevices = (props) => {
+    const {onClose, scroll='paper', data} = props;
     const [isOpen, setIsOpen] = useState(false)
     const formik = useFormik({
         initialValues : {
             code : '',
             name : '',
+            address : '',
             is_active : false,
         },
         validationSchema : Yup.object({
             code: Yup.string().required("Required").max(255, "Code must be at most 255 characters"),
             name: Yup.string().required("Required").max(255, "Name must be at most 255 characters"),
+            address: Yup.string().required("Required").max(255, "Name must be at most 255 characters"),
         }),
         onSubmit : (values) =>{
             handleSubmitForm(values);
         }
     })
 
-    const handleSubmitForm = async (props) => {
-        if(checkFormUpdate){
-            await dispatch(update({...props, id : data.id}));
-        }
-        else{
-            await dispatch(create({...props}));
-        }
-        dispatch(fetchCategory()) // load lạo table
-    }
-
-    const handleDelete = async () => {
-        if(checkFormUpdate){
-            await dispatch(deleteApi ({id : data.id}));
-        }
-        dispatch(fetchCategory())
+    const handleSubmitForm = (props) => {
+        console.log('test', props)
     }
 
     const handleOpen = () => {
         if(data){
             formik.setFieldValue('name',data.name)
             formik.setFieldValue('code',data.code)
-            formik.setFieldValue('is_active',data.is_active === 1 ? true : false)
+            formik.setFieldValue('address',data.address)
+            formik.setFieldValue('is_active',data.is_active)
 
         }
         setIsOpen(!isOpen)
@@ -62,10 +47,6 @@ const ModalSubCategory = (props) => {
     const handleClose = () => {
         formik.handleReset();
         setIsOpen(false)
-    }
-
-    const handleSwicth = (e) => {
-        formik.setFieldValue('is_active',!formik.values.is_active)
     }
 
     return (
@@ -80,7 +61,7 @@ const ModalSubCategory = (props) => {
                                   color={'warning'}
                                   onClick={handleOpen}
                               ><Edit/></Button>
-                              <Button  variant="text" color={'error'} onClick = {handleDelete}><Delete/></Button>
+                              <Button  variant="text" color={'error'}><Delete/></Button>
                           </>
                    }
                </>
@@ -133,12 +114,23 @@ const ModalSubCategory = (props) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
+                                <TextField
+                                    name="address"
+                                    label="address"
+                                    fullWidth
+                                    value = {formik.values.address}
+                                    onChange={formik.handleChange}
+                                    error={!!(formik.touched.address && formik.errors.address)}
+                                    helperText={formik.errors.address && formik.touched.address ? formik.errors.address : null}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
                                 <FormControlLabel
                                     control={
                                         <Switch
                                             name="is_active"
                                             checked={formik.values.is_active}
-                                            onChange={(e) => handleSwicth(e)}
+                                            onChange={formik.handleChange}
                                             color="primary"
                                         />
                                     }
@@ -157,4 +149,4 @@ const ModalSubCategory = (props) => {
     );
 };
 
-export default ModalSubCategory;
+export default ModalSubDevices;

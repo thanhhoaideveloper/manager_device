@@ -1,5 +1,5 @@
 // import in project
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Chip, Typography, useTheme} from "@mui/material";
 import Header from "../../components/Header";
 import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
@@ -11,30 +11,39 @@ import SecurityIcon from "@mui/icons-material/Security";
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchUser } from '../../store/reducer/user'
 import TableUI from '../../components/Table/index'
-import ModalSubCategory from "../categories/subComponent";
-import ModalSubDevices from "./subComponent";
-import {fetchDevice} from "../../store/reducer/device";
+import ModalSubCategory from "../categories/";
+import ModalSubDepartment from "./subComponent";
+import {fetchDepartment} from "../../store/reducer/department";
 import moment from "moment/moment";
 
 
-const Devices = () => {
+const Departments = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const devices = useSelector(state => state.deviceReducer.devices);
+  const departments = useSelector(state => state.departmentReducer.departments);
+    console.log('departmentsdepartments',departments)
   const dispatch = useDispatch();
-  console.log(devices);
-    useEffect(() => {
-        dispatch(fetchDevice())
-    }, [])
+  useEffect(() => {
+      dispatch(fetchDepartment())
+  }, [])
 
   const columns = [
-    { field: "index", headerName: "Index", flex: 1 },
-      { field: "name", headerName: "name", flex: 1 },
-    { field: "code", headerName: "code", flex: 1 },
-    { field: "config", headerName: "config", flex: 1 },
-    { field: "price", headerName: "price", flex: 1 },
+    { field: "id", headerName: "ID", flex: 1 },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "code", headerName: "Code", flex: 1 },
+    { field: "address", headerName: "Address", flex: 1 },
+    { field: "device_count", headerName: "Device Count", flex: 1 },
+      {
+          field: "is_active",
+          headerName: "Active",
+          flex: 1,
+          renderCell: (params) => {
+              return (
+                  <Chip size="small"  label={params.row.is_active ? 'active' : 'no active'} color={params.row.is_active ? 'success' : 'error'} />
+              );
+          },
+      },
       { field: "createdAt", headerName: "createdAt", flex: 1,
           renderCell: (params) => {
               return (
@@ -63,7 +72,7 @@ const Devices = () => {
           headerName: "Actions",
           width: 120,
           getActions: (params) => [
-              <ModalSubCategory
+              <ModalSubDepartment
                   data = {params.row  }
               />
           ]
@@ -72,7 +81,7 @@ const Devices = () => {
 
   return (
     <Box m="10px">
-      <Header title="Devices" subtitle="" />
+      <Header title="Department" subtitle="" />
       <Box 
         height="75vh"
         sx={{
@@ -104,9 +113,9 @@ const Devices = () => {
           },
         }}
       >
-          <ModalSubDevices/>
+          <ModalSubDepartment/>
           <TableUI
-              rows={devices}
+              rows={departments}
               columns={columns}
           />
       </Box>
@@ -114,4 +123,4 @@ const Devices = () => {
   );
 };
 
-export default Devices;
+export default Departments;

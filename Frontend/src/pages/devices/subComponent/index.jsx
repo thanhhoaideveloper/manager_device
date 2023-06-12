@@ -8,14 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
-import authApi from "../../../apis/authApi";
 
-import {create, fetchCategory,update, deleteApi} from '../../../store/reducer/category'
-import {login} from "../../../store/reducer/auth";
-
-const ModalSubCategory = (props) => {
-    const {onClose, scroll='paper', data, dispatch} = props;
-    const checkFormUpdate = data ? true : false;
+const ModalSubDevices = (props) => {
+    const {onClose, scroll='paper', data} = props;
     const [isOpen, setIsOpen] = useState(false)
     const formik = useFormik({
         initialValues : {
@@ -32,28 +27,15 @@ const ModalSubCategory = (props) => {
         }
     })
 
-    const handleSubmitForm = async (props) => {
-        if(checkFormUpdate){
-            await dispatch(update({...props, id : data.id}));
-        }
-        else{
-            await dispatch(create({...props}));
-        }
-        dispatch(fetchCategory()) // load lạo table
-    }
-
-    const handleDelete = async () => {
-        if(checkFormUpdate){
-            await dispatch(deleteApi ({id : data.id}));
-        }
-        dispatch(fetchCategory())
+    const handleSubmitForm = (props) => {
+        console.log('test', props)
     }
 
     const handleOpen = () => {
         if(data){
             formik.setFieldValue('name',data.name)
             formik.setFieldValue('code',data.code)
-            formik.setFieldValue('is_active',data.is_active === 1 ? true : false)
+            formik.setFieldValue('is_active',data.is_active)
 
         }
         setIsOpen(!isOpen)
@@ -62,10 +44,6 @@ const ModalSubCategory = (props) => {
     const handleClose = () => {
         formik.handleReset();
         setIsOpen(false)
-    }
-
-    const handleSwicth = (e) => {
-        formik.setFieldValue('is_active',!formik.values.is_active)
     }
 
     return (
@@ -80,7 +58,7 @@ const ModalSubCategory = (props) => {
                                   color={'warning'}
                                   onClick={handleOpen}
                               ><Edit/></Button>
-                              <Button  variant="text" color={'error'} onClick = {handleDelete}><Delete/></Button>
+                              <Button  variant="text" color={'error'}><Delete/></Button>
                           </>
                    }
                </>
@@ -93,6 +71,9 @@ const ModalSubCategory = (props) => {
                 scroll={scroll}
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
+
+
+
                 // fullScreen = {fullScreen}
                 maxWidth = {'sm'}
                 fullWidth = {false}
@@ -138,7 +119,7 @@ const ModalSubCategory = (props) => {
                                         <Switch
                                             name="is_active"
                                             checked={formik.values.is_active}
-                                            onChange={(e) => handleSwicth(e)}
+                                            onChange={formik.handleChange}
                                             color="primary"
                                         />
                                     }
@@ -157,4 +138,4 @@ const ModalSubCategory = (props) => {
     );
 };
 
-export default ModalSubCategory;
+export default ModalSubDevices;
