@@ -13,6 +13,8 @@ import { tokens } from "../../theme";
 import userImage from "../../assets/user.png";
 import { Link } from "react-router-dom";
 import menu from "../../constants/menu";
+import {getLocalStorage} from "../../utils";
+
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -20,6 +22,8 @@ const Sidebar = () => {
   const [isCollapse, setIsCollapse] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const { collapseSidebar } = useProSidebar();
+  const userData = getLocalStorage('currentUser');
+  const roleMenu = menu.filter((data) => userData.is_admin >= data.role)
 
   const handleCollapse = () => {
     collapseSidebar();
@@ -129,7 +133,7 @@ const Sidebar = () => {
             </Box>
           )}
           {/* MenuItem */}
-          {menu.map((item, index) => {
+          {roleMenu.map((item, index) => {
             return (
               <Item
                 key={index}

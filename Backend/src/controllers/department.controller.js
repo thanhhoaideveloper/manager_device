@@ -2,8 +2,17 @@ const HttpException = require('../utils/httpException.util');
 const departmentService = require('../services/department.service');
 
 async function getAll(req, res){
-    const result = await departmentService.findAll();
-    return res.status(200).send(result);
+    try {
+        const data  = await departmentService.findAll();
+        if(!data){
+            res.status(500).send({
+                message: "Not get category!"
+            })
+        }
+        return res.status(200).send(data);
+    }catch (e) {
+        console.log(e)
+    }
 }
 
 async function getAllDevice(req, res, next){

@@ -1,5 +1,7 @@
 import userApi from '../../apis/userApi';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import notify from "../../utils/notification";
+
 
 const initialState = {
     users: []
@@ -18,9 +20,11 @@ export const createUser = createAsyncThunk(
     async (formData, thunkApi) => {
         try{
             const data = await userApi.createUser(formData);
+            notify.success('Thêm thành công')
             return data;
         }catch(err){
             thunkApi.rejectWithValue(err.response.message);
+            notify.error('Thêm thất bại')
         }
     }
 )
@@ -30,9 +34,11 @@ export const updateUser = createAsyncThunk(
     async ({id, formData}, thunkApi) => {
         try{
             const data = await userApi.updateUser(id, formData);
+            notify.success('Sửa thành công')
             return data;
         }catch(err){
             thunkApi.rejectWithValue(err.response.message);
+            notify.error('Sửa thất bại')
         }
     }
 )

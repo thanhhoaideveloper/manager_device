@@ -33,13 +33,14 @@ const ModalSubCategory = (props) => {
     })
 
     const handleSubmitForm = async (props) => {
-        if(checkFormUpdate){
+        if(checkFormUpdate){ //check nếu dữ liệu cos id thì là form update
             await dispatch(update({...props, id : data.id}));
         }
-        else{
+        else{ // ngược lại form create
             await dispatch(create({...props}));
         }
         dispatch(fetchCategory()) // load lạo table
+        handleClose() // đóng form
     }
 
     const handleDelete = async () => {

@@ -1,5 +1,5 @@
 // import in project
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Chip, Typography, useTheme} from "@mui/material";
 import Header from "../../components/Header";
 import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
@@ -24,7 +24,6 @@ const Devices = () => {
   const colors = tokens(theme.palette.mode);
   const devices = useSelector(state => state.deviceReducer.devices);
   const dispatch = useDispatch();
-  console.log(devices);
     useEffect(() => {
         dispatch(fetchDevice())
     }, [])
@@ -35,6 +34,16 @@ const Devices = () => {
     { field: "code", headerName: "code", flex: 1 },
     { field: "config", headerName: "config", flex: 1 },
     { field: "price", headerName: "price", flex: 1 },
+      {
+          field: "is_active",
+          headerName: "Active",
+          flex: 1,
+          renderCell: (params) => {
+              return (
+                  <Chip size="small"  label={params.row.is_active ? 'active' : 'no active'} color={params.row.is_active ? 'success' : 'error'} />
+              );
+          },
+      },
       { field: "createdAt", headerName: "createdAt", flex: 1,
           renderCell: (params) => {
               return (
@@ -63,8 +72,9 @@ const Devices = () => {
           headerName: "Actions",
           width: 120,
           getActions: (params) => [
-              <ModalSubCategory
+              <ModalSubDevices
                   data = {params.row  }
+                  dispatch = {dispatch}
               />
           ]
       }
@@ -104,7 +114,9 @@ const Devices = () => {
           },
         }}
       >
-          <ModalSubDevices/>
+          <ModalSubDevices
+              dispatch = {dispatch}
+          />
           <TableUI
               rows={devices}
               columns={columns}
