@@ -1,6 +1,8 @@
 import deviceApi from '../../apis/device';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
+import notify from "../../utils/notification";
+import categoryApi from "../../apis/categoryApi";
 
 const initialState = {
     devices: []
@@ -20,6 +22,45 @@ export const fetchDevice = createAsyncThunk(
             })
         };
         return list;
+    }
+)
+
+export const create = createAsyncThunk(
+    "devices",
+    async (body) => {
+        try {
+            const data = await deviceApi.create(body);
+            notify.success('Thêm thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Thêm thất bại')
+        }
+    }
+)
+
+export const update = createAsyncThunk(
+    "devices",
+    async (body) => {
+        try {
+            const data = await deviceApi.update(body);
+            notify.success('Sửa thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Sửa thất bại')
+        }
+    }
+)
+
+export const deleteApi = createAsyncThunk(
+    "devices",
+    async (body) => {
+        try {
+            const data = await deviceApi.deleteApi(body);
+            notify.success('Xóa thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Xóa thất bại')
+        }
     }
 )
 

@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			defaultValue: 1,
 		},
+        actions: {
+			type: DataTypes.STRING,
+			defaultValue: 1,
+		},
     });
 
     User.prototype.toJSON = function () {

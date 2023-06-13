@@ -8,7 +8,9 @@ const initialState = {
 export const fetchDepartment = createAsyncThunk(
     "departments",
     async () => {
+        console.log('datadata')
         const data = await departmentApi.getListDepartment();
+        console.log('datadata',data)
         return data;
     }
 )
