@@ -1,26 +1,41 @@
 // import in project
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import { GridActionsCellItem } from "@mui/x-data-grid";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchUser } from '../../store/reducer/user'
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Update } from "@mui/icons-material";
 import TableUI from '../../components/Table/index'
+import { useState } from "react";
 import ModalSubUser from "./subComponent";
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const users = useSelector(state => state.userReducer.users);
+
+  //modal
+  const [dataUpdate, setDataUpdate] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser())
   }, [dispatch])
+
+  const handleUpdate = async (data) => {
+    setDataUpdate(data);
+    setIsOpen(true);
+  }
+
+  const handleOnClose = async () => {
+    setIsOpen(false);
+  }
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
@@ -59,9 +74,18 @@ const Users = () => {
         headerName: "Actions",
       width: 150,
       getActions: (params) => [
-          <ModalSubUser
-              data = {params.row  }
-          />
+        <GridActionsCellItem
+            icon={<Update />}
+            label="Cập nhật"
+            onClick={() => handleUpdate(params.row)}
+            showInMenu
+        />,
+        <GridActionsCellItem
+            icon={<Delete />}
+            label="Xóa"
+            // onClick={duplicateUser(params.id)}
+            showInMenu
+        />,
       ]
     }
   ];
@@ -69,6 +93,7 @@ const Users = () => {
   return (
     <Box m="10px">
       <Header title="Users" subtitle="Manager Users" />
+      <Button sx={{backgroundColor: colors.greenAccent[600], margin: '10px 5px'}} variant="contained">Tạo mới</Button>
       <Box 
         height="75vh"
         sx={{
@@ -100,11 +125,11 @@ const Users = () => {
           },
         }}
       >
-          <ModalSubUser/>
           <TableUI
               rows={users}
               columns={columns}
           />
+          <ModalSubUser isOpen={isOpen} data={dataUpdate} onClose={handleOnClose}/>
       </Box>
     </Box>
   );

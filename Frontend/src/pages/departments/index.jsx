@@ -22,7 +22,6 @@ const Departments = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const departments = useSelector(state => state.departmentReducer.departments);
-    console.log('departmentsdepartments',departments)
   const dispatch = useDispatch();
   useEffect(() => {
       dispatch(fetchDepartment())

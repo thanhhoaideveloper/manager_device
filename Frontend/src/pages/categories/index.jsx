@@ -1,9 +1,9 @@
 // import in project
-import {Box, Button, Typography, useTheme, Chip} from "@mui/material";
+import { Box, Button, Typography, useTheme, Chip } from "@mui/material";
 import Header from "../../components/Header";
 import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
-import {DataGrid, GridActionsCellItem, GridToolbar} from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -13,7 +13,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import TableUI from '../../components/Table/index'
-import {Delete, Edit} from "@mui/icons-material";
+import { Check, Close, Delete, Edit } from "@mui/icons-material";
 import ModalSubCategory from "./subComponent";
 
 
@@ -28,20 +28,32 @@ const Categories = (props) => {
 
 
     const columns = [
-        { field: "index", headerName: "STT", flex: 1 },
-        { field: "name", headerName: "Name", flex: 1 },
-        { field: "code", headerName: "Code", flex: 1 },
+        { field: "index", headerName: "Số thứ tự", align: 'center', headerAlign: 'center', flex: 1 },
+        { field: "name", headerName: "Tên loại", align: 'center', headerAlign: 'center', flex: 1 },
+        { field: "code", headerName: "Code", align: 'center', headerAlign: 'center', flex: 1 },
         {
             field: "is_active",
-            headerName: "Active",
+            headerName: "Trạng thái",
             flex: 1,
+            align: 'center',
+            headerAlign: 'center',
             renderCell: (params) => {
                 return (
-                    <Chip size="small"  label={params.row.is_active ? 'active' : 'no active'} color={params.row.is_active ? 'success' : 'error'} />
+                    <Chip 
+                        icon={params.row.is_active ? <Check /> : <Close />}
+                        size="medium" 
+                        label={params.row.is_active ? 'Hoạt động' : 'Không hoạt động'} 
+                        color={params.row.is_active ? 'success' : 'error'} 
+                    />
                 );
             },
         },
-        { field: "createdAt", headerName: "createdAt", flex: 1,
+        {
+            field: "createdAt",
+            headerName: "Ngày tạo",
+            flex: 1,
+            align: 'center',
+            headerAlign: 'center',
             renderCell: (params) => {
                 return (
                     <Typography>
@@ -52,7 +64,11 @@ const Categories = (props) => {
                 );
             },
         },
-        { field: "updatedAt", headerName: "UpdatedAt", flex: 1,
+        {
+            field: "updatedAt",
+            headerName: "Ngày cập nhật", flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <Typography>
@@ -66,12 +82,14 @@ const Categories = (props) => {
         {
             field: 'actions',
             type: 'actions',
-            headerName: "Actions",
+            headerName: "Hành động",
             width: 120,
+            headerAlign: 'center',
+            align: 'center',
             getActions: (params) => [
                 <ModalSubCategory
-                    data = {params.row  }
-                    dispatch = {dispatch}
+                    data={params.row}
+                    dispatch={dispatch}
                 />
             ]
         }
@@ -112,7 +130,8 @@ const Categories = (props) => {
                 }}
             >
                 <ModalSubCategory
-                    dispatch = {dispatch}
+                    dispatch={dispatch}
+                    colors={colors}
                 />
                 <TableUI
                     rows={categories}
