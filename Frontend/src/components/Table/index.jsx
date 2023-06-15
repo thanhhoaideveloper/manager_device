@@ -12,6 +12,7 @@ const TableUI = (props) => {
 
     return(
         <DataGrid
+            disableRowSelectionOnClick
             columns={columns}
             rows={rows}
             style={{ height: '400px' }} // Đặt chiều cao tối thiểu

@@ -1,5 +1,6 @@
 import departmentApi from '../../apis/departmentApi';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import notify from "../../utils/notification";
 
 const initialState = {
     departments: []
@@ -8,10 +9,47 @@ const initialState = {
 export const fetchDepartment = createAsyncThunk(
     "departments",
     async () => {
-        console.log('datadata')
         const data = await departmentApi.getListDepartment();
-        console.log('datadata',data)
         return data;
+    }
+)
+
+export const create = createAsyncThunk(
+    "departments",
+    async (body) => {
+        try {
+            await departmentApi.create(body);
+            notify.success('Thêm thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Thêm thất bại')
+        }
+    }
+)
+
+export const update = createAsyncThunk(
+    "departments",
+    async (body) => {
+        try {
+            await departmentApi.update(body);
+            notify.success('Sửa thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Sửa thất bại')
+        }
+    }
+)
+
+export const deleted = createAsyncThunk(
+    "departments",
+    async (body) => {
+        try {
+            await departmentApi.deleteApi(body);
+            notify.success('Xóa thành công')
+        } catch (e){
+            console.error(`ERROR : ${e}`)
+            notify.error('Xóa thất bại')
+        }
     }
 )
 

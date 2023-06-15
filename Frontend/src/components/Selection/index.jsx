@@ -10,8 +10,6 @@ import _ from 'lodash';
 const Selection = (props) => {
     const {name,values,data = {}, handleChange, error, label, required = false, helperText} = props;
     const [age, setAge] = React.useState('');
-    console.log('props',props)
-    console.log('_.size(data)',_.size(data))
     // handleChange = (event) => {
     //     setAge(event.target.value);
     // };
@@ -29,7 +27,7 @@ const Selection = (props) => {
                 >
                     {
                         _.size(data) > 0 ?
-                            data.map((value) => ( <MenuItem value={value.key}>{value.name}</MenuItem>)) : null
+                            data.map((value) => ( <MenuItem key={value.key} value={value.key}>{value.name}</MenuItem>)) : null
                     }
                 </Select>
                 <FormHelperText>{helperText}</FormHelperText>

@@ -1,20 +1,17 @@
 import React, {useState} from "react";
-import { Modal, Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
-import { Field, Form, ErrorMessage, useFormik } from "formik";
+import { Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
-import authApi from "../../../apis/authApi";
 
 import {create, fetchCategory,update, deleteApi} from '../../../store/reducer/category'
-import {login} from "../../../store/reducer/auth";
 
 const ModalSubCategory = (props) => {
-    const {onClose, scroll='paper', data, dispatch} = props;
+    const {scroll='paper', data, dispatch, colors} = props;
     const checkFormUpdate = data ? true : false;
     const [isOpen, setIsOpen] = useState(false)
     const formik = useFormik({
@@ -33,14 +30,14 @@ const ModalSubCategory = (props) => {
     })
 
     const handleSubmitForm = async (props) => {
-        if(checkFormUpdate){ //check nếu dữ liệu cos id thì là form update
+        if(checkFormUpdate){
             await dispatch(update({...props, id : data.id}));
         }
-        else{ // ngược lại form create
+        else{ 
             await dispatch(create({...props}));
         }
-        dispatch(fetchCategory()) // load lạo table
-        handleClose() // đóng form
+        dispatch(fetchCategory());
+        handleClose();
     }
 
     const handleDelete = async () => {
@@ -55,7 +52,6 @@ const ModalSubCategory = (props) => {
             formik.setFieldValue('name',data.name)
             formik.setFieldValue('code',data.code)
             formik.setFieldValue('is_active',data.is_active === 1 ? true : false)
-
         }
         setIsOpen(!isOpen)
     }
@@ -74,7 +70,7 @@ const ModalSubCategory = (props) => {
             <Tooltip  title="Thêm" placement={'bottom'}>
                <>
                    {
-                       !data ? <Button  variant="text" color={'success'} onClick={handleOpen}><AddCircleOutlineOutlinedIcon/></Button> :
+                       !data ? <Button onClick={handleOpen} sx={{backgroundColor: colors.greenAccent[600], margin: '10px 5px'}} variant="contained">Tạo mới</Button> :
                           <>
                               <Button
                                   variant="text"
@@ -94,7 +90,6 @@ const ModalSubCategory = (props) => {
                 scroll={scroll}
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
-                // fullScreen = {fullScreen}
                 maxWidth = {'sm'}
                 fullWidth = {false}
             >
@@ -103,11 +98,9 @@ const ModalSubCategory = (props) => {
                 <DialogContent dividers={scroll === 'paper'}>
                     <Box
                         component="form"
-                        // noValidate
                         autoComplete="off"
                         sx={{
                             '& .MuiTextField-root, .MuiFormControl-root': { width: '100%' },
-                            // width: 800
                         }}
                     >
                         <Grid container spacing={2}>

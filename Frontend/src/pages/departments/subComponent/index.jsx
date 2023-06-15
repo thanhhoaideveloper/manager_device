@@ -1,17 +1,21 @@
 import React, {useState} from "react";
-import { Modal, Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
-import { Field, Form, ErrorMessage, useFormik } from "formik";
+import { Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import {GridActionsCellItem} from "@mui/x-data-grid";
 import {Delete, Edit} from "@mui/icons-material";
 
+import { useDispatch } from 'react-redux';
+import { create, deleted, fetchDepartment, update } from '../../../store/reducer/department'
+
 const ModalSubDevices = (props) => {
-    const {onClose, scroll='paper', data} = props;
+    const {scroll='paper', data} = props;
+    const checkFormUpdate = data ? true : false;
     const [isOpen, setIsOpen] = useState(false)
+    const dispatch = useDispatch();
     const formik = useFormik({
         initialValues : {
             code : '',
@@ -29,8 +33,15 @@ const ModalSubDevices = (props) => {
         }
     })
 
-    const handleSubmitForm = (props) => {
-        console.log('test', props)
+    const handleSubmitForm = async (props) => {
+        if(checkFormUpdate){
+            await dispatch(update({...props, id : data.id}));
+        }
+        else{
+            await dispatch(create({...props}));
+        }
+        dispatch(fetchDepartment())
+        handleClose()// load lạo table
     }
 
     const handleOpen = () => {
@@ -38,8 +49,7 @@ const ModalSubDevices = (props) => {
             formik.setFieldValue('name',data.name)
             formik.setFieldValue('code',data.code)
             formik.setFieldValue('address',data.address)
-            formik.setFieldValue('is_active',data.is_active)
-
+            formik.setFieldValue('is_active',data.is_active === 1 ? true : false)
         }
         setIsOpen(!isOpen)
     }
@@ -47,6 +57,17 @@ const ModalSubDevices = (props) => {
     const handleClose = () => {
         formik.handleReset();
         setIsOpen(false)
+    }
+
+    const handleDelete = async () => {
+        if(checkFormUpdate){
+            await dispatch(deleted({id : data.id}));
+        }
+        dispatch(fetchDepartment())
+    }
+
+    const handleSwicth = (e) => {
+        formik.setFieldValue('is_active',!formik.values.is_active)
     }
 
     return (
@@ -61,7 +82,7 @@ const ModalSubDevices = (props) => {
                                   color={'warning'}
                                   onClick={handleOpen}
                               ><Edit/></Button>
-                              <Button  variant="text" color={'error'}><Delete/></Button>
+                              <Button  variant="text" color={'error'} onClick={handleDelete}><Delete/></Button>
                           </>
                    }
                </>
@@ -130,7 +151,7 @@ const ModalSubDevices = (props) => {
                                         <Switch
                                             name="is_active"
                                             checked={formik.values.is_active}
-                                            onChange={formik.handleChange}
+                                            onChange={handleSwicth}
                                             color="primary"
                                         />
                                     }

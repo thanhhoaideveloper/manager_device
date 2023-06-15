@@ -13,18 +13,26 @@ import { tokens } from "../../theme";
 import userImage from "../../assets/user.png";
 import { Link } from "react-router-dom";
 import menu from "../../constants/menu";
-import {getLocalStorage} from "../../utils";
+import {getActiveMenuName} from "../../utils";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapse, setIsCollapse] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
-  const { collapseSidebar } = useProSidebar();
-  const userData = getLocalStorage('currentUser');
-  const roleMenu = menu.filter((data) => userData.is_admin >= data.role)
 
+  const [selected, setSelected] = useState("dashboard");
+  const { collapseSidebar } = useProSidebar();
+  const currentUser = useSelector(state => state.authReducer.currentUser);
+  const roleMenu = menu.filter((data) => currentUser.is_admin == 1);
+
+  useEffect(() => {
+
+  }, [])
+  
   const handleCollapse = () => {
     collapseSidebar();
     setIsCollapse((prev) => {
@@ -32,14 +40,19 @@ const Sidebar = () => {
     });
   };
 
-  const Item = ({ path, title, icon, selected, setSelected }) => {
+  useEffect(() => {
+    const activeMenuName = getActiveMenuName();
+    setSelected(activeMenuName);
+  }, [])
+
+  const Item = ({ path, title, icon, selected, setSelected, active }) => {
     return (
       <MenuItem
         routerLink={<Link to={path} />}
-        active={selected === title}
+        active={selected === active}
         icon={icon}
         style={{ color: colors.grey[100] }}
-        onClick={() => setSelected(title)}
+        onClick={() => setSelected(active)}
       >
         <Typography>{title}</Typography>
       </MenuItem>
@@ -86,7 +99,7 @@ const Sidebar = () => {
                 sx={{ margin: "10px 10px 20px 10px" }}
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  { currentUser.is_admin ? 'ADMIN' : 'USER'}
                 </Typography>
                 <IconButton onClick={handleCollapse}>
                   <ReorderIcon />
@@ -111,12 +124,12 @@ const Sidebar = () => {
                   color={colors.grey[100]}
                   fontWeight="bold"
                 >
-                  Hoai
+                  {currentUser.name}
                 </Typography>
               </Box>
               <Box display="flex" justifyContent="center" alignContent="center">
                 <Typography variant="h5" color={colors.grey[100]}>
-                  Developer
+                  { currentUser.is_admin ? 'admin' : 'user'}
                 </Typography>
               </Box>
             </>
@@ -142,6 +155,7 @@ const Sidebar = () => {
                 icon={item.icon}
                 selected={selected}
                 setSelected={setSelected}
+                active={item.active}
               />
             );
           })}

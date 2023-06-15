@@ -18,7 +18,6 @@ async function getAll(req, res){
 async function getAllDevice(req, res, next){
     const { id } = req.params;
     const result = await departmentService.getAllDevice({id})
-    console.log(result);
     return res.status(200).send(result);
 }   
 
@@ -51,7 +50,7 @@ async function update(req, res, next){
         const formData = req.body;
         const { id } = req.params;
         const result = await departmentService.updated(formData, id);
-        const departmentUpdate = await departmentService.findOne({ id: result[0]})
+        const departmentUpdate = await departmentService.findOne({ id })
         if(!departmentUpdate){
             return next(new HttpException(404, "Department not found!"));
         }

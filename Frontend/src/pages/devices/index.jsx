@@ -17,6 +17,7 @@ import ModalSubCategory from "../categories/subComponent";
 import ModalSubDevices from "./subComponent";
 import {fetchDevice} from "../../store/reducer/device";
 import moment from "moment/moment";
+import { Check, Close } from "@mui/icons-material";
 
 
 const Devices = () => {
@@ -29,48 +30,35 @@ const Devices = () => {
     }, [])
 
   const columns = [
-    { field: "index", headerName: "Index", flex: 1 },
-      { field: "name", headerName: "name", flex: 1 },
-    { field: "code", headerName: "code", flex: 1 },
-    { field: "config", headerName: "config", flex: 1 },
-    { field: "price", headerName: "price", flex: 1 },
+    { field: "index", headerName: "STT", flex: 1,  headerAlign: 'center',align: 'center' },
+    { field: "name", headerName: "Tên thiết bị", flex: 1, headerAlign: 'center',align: 'center',},
+    { field: "code", headerName: "Code", flex: 1, headerAlign: 'center',align: 'center', },
+    { field: "config", headerName: "Cấu hình", flex: 1, headerAlign: 'center',align: 'center', },
+    { field: "price", headerName: "Giá", flex: 1, headerAlign: 'center',align: 'center', },
       {
           field: "is_active",
-          headerName: "Active",
+          headerName: "Trạng thái",
           flex: 1,
+          headerAlign: 'center',
+          align: 'center',
           renderCell: (params) => {
               return (
-                  <Chip size="small"  label={params.row.is_active ? 'active' : 'no active'} color={params.row.is_active ? 'success' : 'error'} />
-              );
-          },
-      },
-      { field: "createdAt", headerName: "createdAt", flex: 1,
-          renderCell: (params) => {
-              return (
-                  <Typography>
-                      {
-                          moment(params.row.createdAt).format('DD/MM/YYYY')
-                      }
-                  </Typography>
-              );
-          },
-      },
-      { field: "updatedAt", headerName: "UpdatedAt", flex: 1,
-          renderCell: (params) => {
-              return (
-                  <Typography>
-                      {
-                          moment(params.row.updatedAt).format('DD/MM/YYYY')
-                      }
-                  </Typography>
+                <Chip 
+                  icon={params.row.is_active ? <Check /> : <Close />}
+                  size="medium" 
+                  label={params.row.is_active ? 'Hoạt động' : 'Không hoạt động'} 
+                  color={params.row.is_active ? 'success' : 'error'} 
+              />
               );
           },
       },
       {
           field: 'actions',
           type: 'actions',
-          headerName: "Actions",
+          headerName: "Hành động",
           width: 120,
+          headerAlign: 'center',
+          align: 'center',
           getActions: (params) => [
               <ModalSubDevices
                   data = {params.row  }
@@ -116,6 +104,7 @@ const Devices = () => {
       >
           <ModalSubDevices
               dispatch = {dispatch}
+              colors={colors}
           />
           <TableUI
               rows={devices}

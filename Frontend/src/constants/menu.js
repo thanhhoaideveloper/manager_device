@@ -5,11 +5,11 @@ import OnDeviceTrainingIcon from '@mui/icons-material/OnDeviceTraining';
 import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 
 const menu = [
-  { title: "Dashboard", path: "/", icon: <DashboardIcon />, role : 0 },
-  { title: "Người Dùng", path: "/users", icon: <GroupIcon />, role : 1 },
-  { title: "Phòng Ban", path: "/departments", icon: <CameraIndoorIcon />, role : 0 },
-  { title: "Thiết Bị", path: "/devices", icon: <DeviceHubIcon />, role : 0 },
-  { title: "Loại Thiết Bị", path: "/categories", icon: <OnDeviceTrainingIcon />, role : 0 },
+  { active: 'dashboard', title: "Dashboard", path: "/", icon: <DashboardIcon />, role : 0 },
+  { active: 'users', title: "Người Dùng", path: "/users", icon: <GroupIcon />, role : 1 },
+  { active: 'despartments', title: "Phòng Ban", path: "/departments", icon: <CameraIndoorIcon />, role : 0 },
+  { active: 'devices', title: "Thiết Bị", path: "/devices", icon: <DeviceHubIcon />, role : 0 },
+  { active: 'categorys', title: "Loại Thiết Bị", path: "/categories", icon: <OnDeviceTrainingIcon />, role : 0 },
 ];
 
 export default menu;

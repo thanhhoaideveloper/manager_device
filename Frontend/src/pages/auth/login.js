@@ -11,20 +11,24 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
     const message = useSelector(state => state.authReducer.message);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isAuthenticated = useSelector(state => state.authReducer.isAuthenticated);
+
     const handleSubmit = async () => {
         if(!email || !password) return;
+        console.log(email + password)
         await dispatch(login({email, password}));
+        window.location.reload();
     }
 
     useEffect(()=>{
         if(isAuthenticated){
             navigate('/');
         }
-    }, [isAuthenticated, navigate])
+    }, [])
+
     return (
         <Box
             sx={{

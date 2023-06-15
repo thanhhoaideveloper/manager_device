@@ -24,7 +24,7 @@ const Despartment = despartmentModel(sequelize, DataTypes);
 //default User
 // User.bulkCreate([{
 //   name: "Admin",
-//   email: 'admin@gmail.com',
+//   email: 'hoai@gmail.com',
 //   password: bcrypt.hashSync('password', 10)
 // }])
 
