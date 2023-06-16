@@ -34,8 +34,9 @@ exports.login = async (req, res, next) => {
     //generate access token
     const dataForAccessToken = {
         email: user.email
-    }
-    const accessToken = await generateToken(dataForAccessToken, authConfig.accessTokenSecret, authConfig.accessTokenLife);
+	}
+
+	const accessToken = await generateToken(dataForAccessToken, authConfig.accessTokenSecret, authConfig.accessTokenLife);
     if(!accessToken){
         return res.status(401).send({ message: "Login failed!"});
     }
