@@ -11,11 +11,6 @@ import {create, fetchDevice, update, deleteApi} from "../../../store/reducer/dev
 import categoryApi from "../../../apis/categoryApi";
 import { getMapListSelect } from "../../../utils";
 
-const test = [
-    {key : 1, name : 'duc'},
-    {key : 2, name : 'duc2'},
-    {key : 3, name : 'duc3'},
-]
 const ModalSubDevices = (props) => {
     const {scroll='paper', data, dispatch, colors} = props;
     const checkFormUpdate = data ? true : false;
@@ -191,32 +186,6 @@ const ModalSubDevices = (props) => {
                                     helperText={formik.errors.config && formik.touched.config ? formik.errors.config : null}
                                 />
                             </Grid>
-                            {/* <Grid item xs={12}>
-                               <Selection
-                                   name = 'user_id'
-                                   label = {'Users'}
-                                   required={true}
-                                   values = {formik.values.user_id}
-                                   data = {test}
-                                   handleChange = {(e) => {
-                                      formik.setFieldValue('user_id',e.target.value)}}
-                                   error = {!!(formik.touched.user_id && formik.errors.user_id)}
-                                   helperText={formik.errors.user_id && formik.touched.user_id ? formik.errors.user_id : null}
-                               />
-                            </Grid> */}
-                            {/* <Grid item xs={12}>
-                               <Selection
-                                   name = 'parent_id'
-                                   label = {'Parent'}
-                                   required={true}
-                                   values = {formik.values.parent_id}
-                                   data = {test}
-                                   handleChange = {(e) => {
-                                      formik.setFieldValue('parent_id',e.target.value)}}
-                                   error = {!!(formik.touched.parent_id && formik.errors.parent_id)}
-                                   helperText={formik.errors.parent_id && formik.touched.parent_id ? formik.errors.parent_id : null}
-                               />
-                            </Grid> */}
                             <Grid item xs={12}>
                                <Selection
                                    name = 'category_id'
@@ -235,7 +204,7 @@ const ModalSubDevices = (props) => {
                                     control={
                                         <Switch
                                             name="is_active"
-                                            checked={formik.values.is_active == 1 ? true : false}
+                                            checked={formik.values.is_active}
                                             onChange={(e) => handleSwicth(e)}
                                             color="primary"
                                         />

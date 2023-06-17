@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         received_date:{
             type: DataTypes.DATE
         }
-    }, {
-        deletedAt: 'deletedAt',
-        paranoid: true,
     })
 
     return DeviceDepartment;

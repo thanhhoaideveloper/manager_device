@@ -1,7 +1,10 @@
-export const setLocalStrorage = (currentUser) => {
-    if (currentUser) {
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+import { isEmpty } from "lodash";
+
+export const setLocalStrorage = (data) => {
+    if (data) {
+        localStorage.setItem('currentUser', JSON.stringify(data.userPermission));
         localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('_token', data.accessToken);
     }
 }
 
@@ -45,4 +48,30 @@ export const getActiveMenuName = () => {
             break
     }
     return active;
+}
+
+export const _checkPermission = (attrbute, listPermission) => {
+    let permissionKey = attrbute;
+    if(attrbute === 'dashboard'){
+        return true;
+    }
+
+    if(attrbute === 'users'){
+        permissionKey = 'GET_LIST_USER';
+    }
+
+    if(attrbute === 'despartments'){
+        permissionKey = 'GET_LIST_DEPARTMENT';
+    }
+
+    if(attrbute === 'devices'){
+        permissionKey = 'GET_LIST_DEVICE';
+    }
+
+    if(attrbute === 'categorys'){
+        permissionKey = 'GET_LIST_CATEGORY';
+    }
+
+    const hasPermission = listPermission.filter(item => item.name === permissionKey);
+    return !isEmpty(hasPermission) ? true : false;
 }

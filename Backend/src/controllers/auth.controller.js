@@ -41,8 +41,10 @@ exports.login = async (req, res, next) => {
         return res.status(401).send({ message: "Login failed!"});
     }
 
+    const userPermission = await UserService.listPermission(user.id);
+    
     return res.status(200).send({
         accessToken,
-        user
+        userPermission
     })
 }

@@ -5,7 +5,7 @@ const deviceController = require('../controllers/device.controller');
 const { isAuth } = require("../middlewares/auth.middleware");
 const { isPermission } = require("../middlewares/access.middleware");
 
-router.get("", isAuth, isPermission("GET_LIST_DEVICE"), deviceController.getAll);
+router.post("/get-list", isAuth, isPermission("GET_LIST_DEVICE"), deviceController.getAll);
 router.patch(
   "/:id",
   isAuth,

@@ -4,12 +4,15 @@ exports.findOne = async (fields) => {
     return await Device.findOne({ where: fields});
 }
 
-exports.findAll = async () => {
-    return Device.findAll();
+exports.findAll = async (filter) => {
+    if(!filter.is_active){
+        return Device.findAll();
+    }
+    return Device.findAll({where: filter});
 }
 
-exports.create = async ($data) => {
-    return await Device.create($data);
+exports.create = async (data) => {
+    return await Device.create(data);
 }
 
 exports.updated = async(data, id) => {

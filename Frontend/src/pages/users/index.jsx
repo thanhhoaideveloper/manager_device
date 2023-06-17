@@ -13,11 +13,13 @@ import { Delete, Update } from "@mui/icons-material";
 import TableUI from '../../components/Table/index'
 import { useState } from "react";
 import ModalSubUser from "./subComponent";
+import { _checkPermission } from "../../utils";
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const users = useSelector(state => state.userReducer.users);
+  const currentUser = useSelector(state => state.authReducer.currentUser);
 
   //modal
   const [dataUpdate, setDataUpdate] = useState(null);
@@ -77,12 +79,14 @@ const Users = () => {
         <GridActionsCellItem
             icon={<Update />}
             label="Cập nhật"
+            disabled={ _checkPermission('UPDATE_USER', currentUser.Permissions)} 
             onClick={() => handleUpdate(params.row)}
             showInMenu
         />,
         <GridActionsCellItem
             icon={<Delete />}
             label="Xóa"
+            disabled={ _checkPermission('DELETE_USER', currentUser.Permissions)} 
             // onClick={duplicateUser(params.id)}
             showInMenu
         />,
@@ -93,7 +97,9 @@ const Users = () => {
   return (
     <Box m="10px">
       <Header title="Users" subtitle="Manager Users" />
-      <Button sx={{backgroundColor: colors.greenAccent[600], margin: '10px 5px'}} variant="contained">Tạo mới</Button>
+      { _checkPermission('ADD_USER', currentUser.Permissions) &&
+        (<Button sx={{backgroundColor: colors.greenAccent[600], margin: '10px 5px'}} variant="contained">Tạo mới</Button>)
+      }
       <Box 
         height="75vh"
         sx={{

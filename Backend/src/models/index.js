@@ -34,8 +34,8 @@ const UserPermission = userPermissionModel(sequelize, DataTypes);
 // }])
 
 //relationship
-Device.belongsToMany(Despartment, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "despartment_id"});
-Despartment.belongsToMany(Device, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "device_id" });
+Device.belongsToMany(Despartment, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "device_id"});
+Despartment.belongsToMany(Device, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "despartment_id" });
 Permission.belongsToMany(User, { through: 'UserPermission', onDelete: 'cascade', foreignKey: 'permission_id' });
 User.belongsToMany(Permission, { through: 'UserPermission', onDelete: 'cascade', foreignKey: 'user_id' })
 

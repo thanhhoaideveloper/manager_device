@@ -4,6 +4,9 @@ const departmentApi = {
     getListDepartment: () => {
         return axiosClient.get('/despartment');
     },
+    getOne: (id) => {
+        return axiosClient.patch(`/despartment/${id}`)
+    },
     create: (body) => {
         return axiosClient.post('/despartment',{...body});
     },
@@ -14,6 +17,15 @@ const departmentApi = {
     deleteApi : (body) => {
         const {id} = body;
         return axiosClient.delete(`/despartment/${id}`);
+    },
+    getDevice: (id) => {
+        return axiosClient.get(`/despartment/${id}/get-device`);
+    },
+    addDevice: (formData) => {
+        return axiosClient.post('/despartment/add-device', formData);
+    },
+    removeDevice: (formData) => {
+        return axiosClient.post('/despartment/remove-device', formData);
     }
 }
 

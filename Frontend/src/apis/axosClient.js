@@ -9,9 +9,9 @@ const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use(async (request) => {
-    const token = Cookie.get('_token');
+    const token = localStorage.getItem('_token');
     if(token){
-        request.headers.Authorization = `Bearer ${token}`;
+        request.headers.Authorization = `${token}`;
     }
     return request;
 });
@@ -23,6 +23,10 @@ axiosClient.interceptors.response.use(async (response) => {
 
     return response;
 }, (error) => {
+    if(error.response.status === 401){
+        localStorage.clear();
+        window.location.href = '/login';
+    }
     throw error;
 })
 
