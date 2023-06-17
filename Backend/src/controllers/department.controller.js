@@ -17,7 +17,7 @@ async function getAll(req, res){
 
 async function getAllDevice(req, res, next){
     const { id } = req.params;
-    const result = await departmentService.getAllDevice({id})
+    const result = await departmentService.getAllDevice({id: id})
     return res.status(200).send(result);
 }   
 

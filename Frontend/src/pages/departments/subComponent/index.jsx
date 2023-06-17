@@ -1,18 +1,18 @@
 import React, {useState} from "react";
-import { Button, TextField, FormControlLabel, Switch, Grid, Tooltip, Dialog, Box } from "@mui/material";
+import { Button, TextField, FormControlLabel, Switch, Grid, Dialog, Box, IconButton } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import {Delete, Edit} from "@mui/icons-material";
+import {Delete, Details, DetailsRounded, Edit, Visibility} from "@mui/icons-material";
 
 import { useDispatch } from 'react-redux';
 import { create, deleted, fetchDepartment, update } from '../../../store/reducer/department'
 
 const ModalSubDevices = (props) => {
-    const {scroll='paper', data} = props;
+    const {scroll='paper', data, onClickDetail} = props;
     const checkFormUpdate = data ? true : false;
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch();
@@ -70,25 +70,36 @@ const ModalSubDevices = (props) => {
         formik.setFieldValue('is_active',!formik.values.is_active)
     }
 
+    const hanleClickDetail = () => {
+        if(data){
+            onClickDetail(data.id);
+        }
+    }
+
     return (
         <>
-            <Tooltip  title="Thêm" placement={'bottom'}>
-               <>
-                   {
-                       !data ? <Button  variant="text" color={'success'} onClick={handleOpen}><AddCircleOutlineOutlinedIcon/></Button> :
-                          <>
-                              <Button
-                                  variant="text"
-                                  color={'warning'}
-                                  onClick={handleOpen}
-                              ><Edit/></Button>
-                              <Button  variant="text" color={'error'} onClick={handleDelete}><Delete/></Button>
-                          </>
-                   }
-               </>
-
-            </Tooltip>
-
+            <>
+                {
+                    !data ? <Button  variant="text" color={'success'} onClick={handleOpen}><AddCircleOutlineOutlinedIcon/></Button> :
+                        <>
+                            {/* <Button
+                                variant="text"
+                                color={'warning'}
+                                onClick={handleOpen}
+                            ><Edit/></Button>
+                            <Button  variant="text" color={'error'} onClick={handleDelete}><Delete/></Button> */}
+                            <IconButton aria-label="Update" onClick={handleOpen}>
+                                <Edit color="warning" />
+                            </IconButton>
+                            <IconButton aria-label="delete" onClick={handleDelete}>
+                                <Delete color="error" />
+                            </IconButton>
+                            <IconButton aria-label="Detail" onClick={hanleClickDetail}>
+                                <Visibility color="success" />
+                            </IconButton>
+                        </>
+                }
+            </>
             <Dialog
                 open={isOpen}
                 onClose={handleClose}

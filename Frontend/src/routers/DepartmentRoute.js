@@ -1,5 +1,6 @@
 import Departments from "../pages/departments";
 import MainLayout from "../layouts/MainLayout";
+import DespartmentDetail from "../pages/departments/subComponent/detail";
 
 const MainRoute = {
     path: "/departments",
@@ -8,6 +9,10 @@ const MainRoute = {
         {
             path: "",
             element: <Departments />
+        },
+        {
+            path: ":id",
+            element: <DespartmentDetail />
         }
     ]
 }

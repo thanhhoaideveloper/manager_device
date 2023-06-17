@@ -1,22 +1,14 @@
 // import in project
-import {Box, Chip, Typography, useTheme} from "@mui/material";
+import {Box, Chip, useTheme} from "@mui/material";
 import Header from "../../components/Header";
-import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import PersonIcon from "@mui/icons-material/Person";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import SecurityIcon from "@mui/icons-material/Security";
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchUser } from '../../store/reducer/user'
 import TableUI from '../../components/Table/index'
-import ModalSubCategory from "../categories/subComponent";
 import ModalSubDevices from "./subComponent";
 import {fetchDevice} from "../../store/reducer/device";
-import moment from "moment/moment";
 import { Check, Close } from "@mui/icons-material";
 
 
@@ -27,7 +19,7 @@ const Devices = () => {
   const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchDevice())
-    }, [])
+    }, [dispatch])
 
   const columns = [
     { field: "index", headerName: "STT", flex: 1,  headerAlign: 'center',align: 'center' },
@@ -42,13 +34,13 @@ const Devices = () => {
           headerAlign: 'center',
           align: 'center',
           renderCell: (params) => {
-              return (
-                <Chip 
-                  icon={params.row.is_active ? <Check /> : <Close />}
-                  size="medium" 
-                  label={params.row.is_active ? 'Hoạt động' : 'Không hoạt động'} 
-                  color={params.row.is_active ? 'success' : 'error'} 
-              />
+                return (
+                  <Chip 
+                    icon={params.row.is_active ? <Check /> : <Close />}
+                    size="medium" 
+                    label={params.row.is_active ? 'Hoạt động' : 'Không hoạt động'} 
+                    color={params.row.is_active ? 'success' : 'error'} 
+                />
               );
           },
       },

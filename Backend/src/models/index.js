@@ -29,8 +29,8 @@ const Despartment = despartmentModel(sequelize, DataTypes);
 // }])
 
 //relationship
-Device.belongsToMany(Despartment, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "despartment_id"});
-Despartment.belongsToMany(Device, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "device_id" });
+Device.belongsToMany(Despartment, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "device_id"});
+Despartment.belongsToMany(Device, { through: 'DeviceDepartment', onDelete: 'cascade', foreignKey: "despartment_id" });
 
 sequelize.sync({ force: false }).then(()=>{
   console.log('Connect DB successfully!')

@@ -1,31 +1,33 @@
 // import in project
 import {Box, Chip, Typography, useTheme} from "@mui/material";
 import Header from "../../components/Header";
-import { mockDataTeam } from "../../data/mockData";
 import { tokens } from "../../theme";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import PersonIcon from "@mui/icons-material/Person";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import SecurityIcon from "@mui/icons-material/Security";
 
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import TableUI from '../../components/Table/index'
-import ModalSubCategory from "../categories/";
 import ModalSubDepartment from "./subComponent";
 import {fetchDepartment} from "../../store/reducer/department";
 import moment from "moment/moment";
+import { Check, Close } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 
 const Departments = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const departments = useSelector(state => state.departmentReducer.departments);
+  const navigator = useNavigate();
+
   const dispatch = useDispatch();
   useEffect(() => {
       dispatch(fetchDepartment())
-  }, [])
+  }, [dispatch])
+
+  const handleClickDetail = (id) => {
+    navigator(`/departments/${id}`)
+  }
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
@@ -38,8 +40,13 @@ const Departments = () => {
           headerName: "Active",
           flex: 1,
           renderCell: (params) => {
-              return (
-                  <Chip size="small"  label={params.row.is_active ? 'active' : 'no active'} color={params.row.is_active ? 'success' : 'error'} />
+                return (
+                  <Chip 
+                    icon={params.row.is_active ? <Check /> : <Close />}
+                    size="medium" 
+                    label={params.row.is_active ? 'Hoạt động' : 'Không hoạt động'} 
+                    color={params.row.is_active ? 'success' : 'error'} 
+                />
               );
           },
       },
@@ -73,6 +80,7 @@ const Departments = () => {
           getActions: (params) => [
               <ModalSubDepartment
                   data = {params.row  }
+                  onClickDetail = {handleClickDetail}
               />
           ]
       }
@@ -80,7 +88,7 @@ const Departments = () => {
 
   return (
     <Box m="10px">
-      <Header title="Department" subtitle="" />
+      <Header title="Phòng Ban" subtitle="" />
       <Box 
         height="75vh"
         sx={{

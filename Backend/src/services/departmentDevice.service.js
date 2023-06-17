@@ -1,12 +1,12 @@
-const { DepartMentDevice } = require("../models");
+const { DeviceDepartment } = require("../models");
 
 
 exports.findAll = async () => {
-    return await DepartMentDevice.findAll()
+    return await DeviceDepartment.findAll()
 }
 
 exports.addDevice = async (data) => {
-    return await DepartMentDevice.bulkCreate(data);
+    return await DeviceDepartment.bulkCreate(data);
 }
 
 // exports.updated = async(data, id) => {
