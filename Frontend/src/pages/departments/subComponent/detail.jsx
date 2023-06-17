@@ -3,9 +3,10 @@ import Header from "../../../components/Header";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import departmentApi from "../../../apis/departmentApi";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import ModalAddDevice from "./modalAddDevice";
+import { Outbound } from "@mui/icons-material";
 
 const DespartmentDetail = () => {
     const theme = useTheme();
@@ -34,7 +35,18 @@ const DespartmentDetail = () => {
     }
 
     const handleClose = () => {
+        fetchDeviceOfDespartment();
         setIsOpen(false);
+    }
+
+    const handleRemoveDevice = async (id) => {
+        const formData = {
+            despartment_id: despartment?.id,
+            device_id: id
+        }
+
+        await departmentApi.removeDevice(formData);
+        fetchDeviceOfDespartment();
     }
 
     useEffect(() => {
@@ -55,7 +67,13 @@ const DespartmentDetail = () => {
             headerAlign: 'center',
             align: 'center',
             getActions: (params) => [
-                
+                <GridActionsCellItem
+                    icon={<Outbound color={'warning'} fontSize="medium" />}
+                    label="Xóa"
+                    // disabled={ _checkPermission('UPDATE_USER', currentUser.Permissions)} 
+                    onClick={() => handleRemoveDevice(params.row.id)}
+                    // showInMenu
+                />, 
             ]
         }
     ];

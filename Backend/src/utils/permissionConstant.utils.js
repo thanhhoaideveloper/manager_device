@@ -25,6 +25,7 @@ const PermissionConstant = {
   DELETE_DEPARTMENT: "Xóa phòng ban",
   GET_LIST_DEVICE_DEPARTMENT: "Lấy danh sách thiết bị của phòng ban",
   ADD_DEVICE_TO_DEPARTMENT: "Thêm thiết bị vào phòng ban",
+  REMOVE_DEVICE_TO_DEPARTMENT: "Xóa thiết bị ra khỏi phòng ban",
 
   GET_LIST_PERMISSION: "Lấy danh sách quyền truy cập",
   ADD_PERMISSION: "Thêm quyền cho người dùng",

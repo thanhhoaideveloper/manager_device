@@ -50,5 +50,11 @@ router.post(
   isPermission("ADD_DEVICE_TO_DEPARTMENT"),
   departmentDeviceController.create
 );
+router.post(
+  "/remove-device",
+  isAuth,
+  isPermission("REMOVE_DEVICE_TO_DEPARTMENT"),
+  departmentDeviceController.remove
+);
 
 module.exports = router;

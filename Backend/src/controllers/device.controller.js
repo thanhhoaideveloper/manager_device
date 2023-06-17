@@ -2,7 +2,8 @@ const HttpException = require('../utils/httpException.util');
 const deviceService = require('../services/device.service');
 
 async function getAll(req, res){
-    const result = await deviceService.findAll();
+    const { is_active } = req.body;
+    const result = await deviceService.findAll({is_active});
     return res.status(200).send(result);
 }
 

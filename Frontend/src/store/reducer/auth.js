@@ -6,6 +6,7 @@ import { setLocalStrorage, getLocalStorage, removeLocalStorage } from '../../uti
 const initialState = {
     isAuthenticated: getLocalStorage('isAuthenticated'),
     currentUser: getLocalStorage('currentUser'),
+    permission: getLocalStorage('permission'),
     message: null
 }
 
@@ -14,7 +15,7 @@ export const login = createAsyncThunk(
     async ({email, password}, thunkApi) => {
         try{
             const data = await authApi.login(email, password);
-            setLocalStrorage(data.user);
+            setLocalStrorage(data);
             return data;
         }catch(err){
             if (!err.response) {
@@ -25,6 +26,7 @@ export const login = createAsyncThunk(
       
     }
 )
+
 
 const auth = createSlice({
     name: "auth",

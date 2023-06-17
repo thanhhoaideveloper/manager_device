@@ -34,7 +34,7 @@ const Departments = () => {
     { field: "name", headerName: "Name", flex: 1 },
     { field: "code", headerName: "Code", flex: 1 },
     { field: "address", headerName: "Address", flex: 1 },
-    { field: "device_count", headerName: "Device Count", flex: 1 },
+    { field: "device_count", headerName: "Số lượng thiết bị", flex: 1 },
       {
           field: "is_active",
           headerName: "Active",

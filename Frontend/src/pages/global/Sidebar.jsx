@@ -13,7 +13,7 @@ import { tokens } from "../../theme";
 import userImage from "../../assets/user.png";
 import { Link } from "react-router-dom";
 import menu from "../../constants/menu";
-import {getActiveMenuName} from "../../utils";
+import { _checkPermission, getActiveMenuName } from "../../utils";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
@@ -27,12 +27,14 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("dashboard");
   const { collapseSidebar } = useProSidebar();
   const currentUser = useSelector(state => state.authReducer.currentUser);
-  const roleMenu = menu.filter((data) => currentUser.is_admin == 1);
+  const roleMenu = menu.filter((data) => {
+    return _checkPermission(data.active, currentUser.Permissions);
+  });
 
   useEffect(() => {
 
   }, [])
-  
+
   const handleCollapse = () => {
     collapseSidebar();
     setIsCollapse((prev) => {
@@ -99,7 +101,7 @@ const Sidebar = () => {
                 sx={{ margin: "10px 10px 20px 10px" }}
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  { currentUser.is_admin ? 'ADMIN' : 'USER'}
+                  {currentUser.is_admin ? 'ADMIN' : 'USER'}
                 </Typography>
                 <IconButton onClick={handleCollapse}>
                   <ReorderIcon />
@@ -129,7 +131,7 @@ const Sidebar = () => {
               </Box>
               <Box display="flex" justifyContent="center" alignContent="center">
                 <Typography variant="h5" color={colors.grey[100]}>
-                  { currentUser.is_admin ? 'admin' : 'user'}
+                  {currentUser.is_admin ? 'admin' : 'user'}
                 </Typography>
               </Box>
             </>

@@ -16,10 +16,9 @@ const ModalAddDevice = (props) => {
         pageSize: 25,
         page: 0,
     });
-    const [deviceSelection, setDeviceSelection] = useState([])
 
     const fetchDevice = useCallback(async () => {
-        const dataDevice = await deviceApi.getListDevice({is_active: 1});
+        const dataDevice = await deviceApi.getListDevice();
         setDevice(dataDevice);
     }, [])
 
@@ -28,18 +27,13 @@ const ModalAddDevice = (props) => {
     }
 
     const handleChangeSelection = async (items) => {
-        setDeviceSelection([...items]);
-    }
-
-    const handleSubmit = async () => {
         const inputs = {
             despartment_id: despartmentId,
-            device_id: deviceSelection
+            device_id: items
         };
 
         await departmentApi.addDevice(inputs);
         fetchDevice();
-        onClose();
     }
 
     useEffect(() => {
@@ -111,7 +105,7 @@ const ModalAddDevice = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" color={'error'} onClick={handleClose}>Cancel</Button>
-                <Button variant="contained" color={'success'} onClick={handleSubmit}>Save</Button>
+                <Button variant="contained" color={'success'}>Save</Button>
             </DialogActions>
         </Dialog>
     );
