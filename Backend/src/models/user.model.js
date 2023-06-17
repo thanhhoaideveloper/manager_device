@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("users", {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            primaryKey: true
-        },
-        name: {
-            type: DataTypes.STRING
-        },
-        email: {
+	const User = sequelize.define("users", {
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull: false,
+			primaryKey: true
+		},
+		name: {
+			type: DataTypes.STRING
+		},
+		email: {
 			type: DataTypes.STRING,
 			unique: true,
 			allowNull: false,
@@ -18,15 +18,15 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-        is_admin: {
+		is_root: {
 			type: DataTypes.INTEGER,
-			defaultValue: 1,
+			defaultValue: 0,
 		},
-        actions: {
+		actions: {
 			type: DataTypes.STRING,
-			defaultValue: 1,
+			allowNull: true,
 		},
-    });
+	});
 
     User.prototype.toJSON = function () {
         let values = Object.assign({}, this.get());
