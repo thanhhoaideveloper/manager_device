@@ -65,10 +65,17 @@ async function deleted(req, res, next){
     }
 }
 
+async function getOneUserHasPermission(req, res, next) {
+	const { id } = req.params;
+	const user = await userService.listPermission(id);
+	if (!user) return res.status(401).send({ message: "Not found user" });
+	return res.status(200).send(user);
+}
 module.exports = {
-    getAll,
-    getOne,
-    create,
-    update,
-    deleted
+	getAll,
+	getOne,
+	create,
+	update,
+	deleted,
+	getOneUserHasPermission
 }
