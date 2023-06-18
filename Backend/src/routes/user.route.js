@@ -16,7 +16,7 @@ router.get(
 router.get(
   "/permission/:id",
   isAuth,
-  isPermission("GET_ONE_USER_HAS_PERMISSION"),
+  // isPermission("GET_ONE_USER_HAS_PERMISSION"),
   UserController.getOneUserHasPermission
 );
 router.put(

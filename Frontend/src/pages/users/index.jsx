@@ -9,11 +9,12 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchUser } from '../../store/reducer/user'
-import { Delete, Update } from "@mui/icons-material";
+import { Delete, Security, Update } from "@mui/icons-material";
 import TableUI from '../../components/Table/index'
 import { useState } from "react";
 import ModalSubUser from "./subComponent";
 import { _checkPermission } from "../../utils";
+import ModalPermission from "./subComponent/ModalPermission";
 
 const Users = () => {
   const theme = useTheme();
@@ -24,6 +25,8 @@ const Users = () => {
   //modal
   const [dataUpdate, setDataUpdate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModalPermission, setOpenModalPermission] = useState(false);
+  const [userSelection, setUserSelection] = useState(null);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,6 +40,12 @@ const Users = () => {
 
   const handleOnClose = async () => {
     setIsOpen(false);
+    setOpenModalPermission(false);
+  }
+
+  const handleShowPermission = async (data) => {
+    setUserSelection(data);
+    setOpenModalPermission(true);
   }
 
   const columns = [
@@ -90,6 +99,14 @@ const Users = () => {
             // onClick={duplicateUser(params.id)}
             showInMenu
         />,
+        <GridActionsCellItem
+            icon={<Security />}
+            label="Quyền"
+            // disabled={ _checkPermission('DELETE_USER', currentUser.Permissions)} 
+            // onClick={duplicateUser(params.id)}
+            onClick={() => handleShowPermission(params.row)}
+            showInMenu
+        />,
       ]
     }
   ];
@@ -136,6 +153,7 @@ const Users = () => {
               columns={columns}
           />
           <ModalSubUser isOpen={isOpen} data={dataUpdate} onClose={handleOnClose}/>
+          <ModalPermission isOpen={isOpenModalPermission} user={userSelection} onClose={handleOnClose}/>
       </Box>
     </Box>
   );

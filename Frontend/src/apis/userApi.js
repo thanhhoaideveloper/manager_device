@@ -9,6 +9,9 @@ const userApi = {
     },
     updateUser: (id, formData) => {
         return axiosClient.put(`/users/${id}`, formData);
+    },
+    getListPermission: (id) => {
+        return axiosClient.get(`/users/permission/${id}`);
     }
 }
 
