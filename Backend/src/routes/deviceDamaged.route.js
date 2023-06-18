@@ -1,36 +1,39 @@
 const express = require("express");
 const router = express.Router();
 
-const requestDeviceController = require("../controllers/requestDevice.controller");
+const deviceDamagedController = require("../controllers/deviceDamaged.controller");
 const { isAuth } = require("../middlewares/auth.middleware");
 const { isPermission } = require("../middlewares/access.middleware");
 
 router.get(
   "",
   isAuth,
-  requestDeviceController.getAll
+  isPermission("DEVICE_MANAGEMENT"),
+  deviceDamagedController.getAll
 );
 router.post(
   "",
   isAuth,
-  requestDeviceController.create
+  isPermission("DEVICE_MANAGEMENT"),
+  deviceDamagedController.create
 );
 router.get(
   "/:id",
   isAuth,
-  requestDeviceController.getOne
+  isPermission("DEVICE_MANAGEMENT"),
+  deviceDamagedController.getOne
 );
 router.put(
   "/:id",
   isAuth,
   isPermission("DEVICE_MANAGEMENT"),
-  requestDeviceController.updateStatus
+  deviceDamagedController.updateStatus
 );
 router.delete(
   "/:id",
   isAuth,
   isPermission("DEVICE_MANAGEMENT"),
-  requestDeviceController.remove
+  deviceDamagedController.remove
 );
 
 module.exports = router;

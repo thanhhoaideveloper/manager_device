@@ -37,12 +37,13 @@ module.exports = (sequelize, DataTypes) => {
         default: 1,
       },
       department_from: {
-				type: DataTypes.INTEGER,
-				allowNull: false
-			},
-			department_to: {
-				allowNull: false
-			}
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      department_to: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       deletedAt: "deletedAt",
