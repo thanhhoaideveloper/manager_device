@@ -63,7 +63,7 @@ export const deleteApi = createAsyncThunk(
     }
 )
 
-const users = createSlice({
+const devices = createSlice({
     name: "devices",
     initialState,
     extraReducers: (builder) => {
@@ -73,4 +73,4 @@ const users = createSlice({
     }
 })
 
-export default users.reducer;
+export default devices.reducer;
