@@ -14,22 +14,22 @@ async function findAll(req, res, next){
 
 async function create(req, res, next) {
     try{
-        const { despartment_id, device_id } = req.body;
+        const { department_id, deviceId } = req.body;
         const now = new Date();
-        device_id.forEach(async item => {
+        deviceId.forEach(async item => {
             const formData = {
-                despartment_id: despartment_id,
+                department_id: department_id,
                 device_id: item,
                 quantity: 1,
                 received_date: now
             }
-            const deviceDespartment = await departmentDeviceService.getOne({despartment_id, device_id: item});
-            if(deviceDespartment){
-                await departmentDeviceService.plusQuantity({ quantity: deviceDespartment.quantity + 1}, {despartment_id, device_id: item});
+            const deviceDepartment = await departmentDeviceService.getOne({department_id, device_id: item});
+            if(deviceDepartment){
+                await departmentDeviceService.plusQuantity({ quantity: deviceDepartment.quantity + 1}, {department_id, device_id: item});
             }else{
                 await departmentDeviceService.addDevice(formData);
-                const despartment = await departmentService.findOne({id: despartment_id});
-                await departmentService.updated({ device_count : despartment.device_count + 1}, despartment_id);
+                const department = await departmentService.findOne({id: department_id});
+                await departmentService.updated({ device_count : department.device_count + 1}, department_id);
             }
         })
         return res.status(201).send([]);
@@ -41,11 +41,11 @@ async function create(req, res, next) {
 
 async function remove(req, res, next){
     try{
-        const { despartment_id, device_id } = req.body;
-        await departmentDeviceService.removeDevice(despartment_id, device_id);
-        const despartment = await departmentService.findOne({id: despartment_id});
-        console.log(despartment);
-        await departmentService.updated({ device_count: despartment.device_count - 1 }, despartment_id);
+        const { department_id, device_id } = req.body;
+        await departmentDeviceService.removeDevice(department_id, device_id);
+        const department = await departmentService.findOne({id: department_id});
+        console.log(department);
+        await departmentService.updated({ device_count: department.device_count - 1 }, department_id);
         res.status(200).send({});
     }catch(err){
         next(new HttpException(500, err.errors[0].message));

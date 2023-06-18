@@ -8,31 +8,31 @@ const { isPermission } = require("../middlewares/access.middleware");
 router.get(
   "",
   isAuth,
-  isPermission("GET_LIST_CATEGORY"),
+  isPermission("DEVICE_MANAGEMENT"),
   categoryController.getAll
 );
 router.post(
   "",
   isAuth,
-  isPermission("ADD_CATEGORY"),
+  isPermission("DEVICE_MANAGEMENT"),
   categoryController.create
 );
 router.patch(
   "/:id",
   isAuth,
-  isPermission("GET_ONE_CATEGORY"),
+  isPermission("DEVICE_MANAGEMENT"),
   categoryController.findOne
 );
 router.put(
   "/:id",
   isAuth,
-  isPermission("UPDATE_CATEGORY"),
+  isPermission("DEVICE_MANAGEMENT"),
   categoryController.update
 );
 router.delete(
   "/:id",
   isAuth,
-  isPermission("DELETE_CATEGORY"),
+  isPermission("DEVICE_MANAGEMENT"),
   categoryController.deleteCategory
 );
 

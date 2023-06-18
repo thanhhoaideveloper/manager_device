@@ -9,31 +9,31 @@ const { isPermission } = require("../middlewares/access.middleware");
 router.get(
   "",
   isAuth,
-  isPermission("GET_LIST_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentController.getAll
 );
 router.patch(
   "/:id",
   isAuth,
-  isPermission("GET_ONE_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentController.getOne
 );
 router.post(
   "",
   isAuth,
-  isPermission("ADD_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentController.create
 );
 router.put(
   "/:id",
   isAuth,
-  isPermission("UPDATE_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentController.update
 );
 router.delete(
   "/:id",
   isAuth,
-  isPermission("DELETE_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentController.deleted
 );
 
@@ -41,13 +41,13 @@ router.delete(
 router.get(
   "/:id/get-device",
   isAuth,
-  isPermission("GET_LIST_DEVICE_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentController.getAllDevice
 );
 router.post(
   "/add-device",
   isAuth,
-  isPermission("ADD_DEVICE_TO_DEPARTMENT"),
+  isPermission("DEPARTMENT_MANAGEMENT"),
   departmentDeviceController.create
 );
 router.post(
