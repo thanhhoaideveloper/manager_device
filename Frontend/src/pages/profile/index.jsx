@@ -17,8 +17,6 @@ const Profile = () => {
     lastName: "",
     email: "",
     contact: "",
-    address1: "",
-    address2: "",
   };
 
   const userSchema = yup.object().shape({
@@ -32,7 +30,7 @@ const Profile = () => {
 
   return (
     <Box m="10px">
-      <Header title="CREACT USER" subtitle="Create a new User profile" />
+      <Header title="Hồ sơ cá nhân" subtitle="Quản lý hồ sơ" />
       <Formik
         initialValues={initialValue}
         onSubmit={handleSubmit}
@@ -110,36 +108,10 @@ const Profile = () => {
                 helperText={!!touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={!!touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={!!touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
             </Box>
             <Box display="flex" justifyContent="end" mt="10px">
               <Button type="submit" color="secondary" variant="contained">
-                Create new User
+                Cập nhật
               </Button>
             </Box>
           </form>
@@ -147,6 +119,6 @@ const Profile = () => {
       </Formik>
     </Box>
   );
-};
+}
 
 export default Profile;
