@@ -12,6 +12,12 @@ const userApi = {
     },
     getListPermission: (id) => {
         return axiosClient.get(`/users/permission/${id}`);
+    },
+    deleteUser: (id) => {
+        return axiosClient.delete(`/users/${id}`)
+    },
+    updateRole: (formData) => {
+        return axiosClient.post('/users/change-permission', formData);
     }
 }
 

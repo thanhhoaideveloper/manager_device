@@ -13,8 +13,9 @@ import { Delete, Security, Update } from "@mui/icons-material";
 import TableUI from '../../components/Table/index'
 import { useState } from "react";
 import ModalSubUser from "./subComponent";
-import { _checkPermission } from "../../utils";
 import ModalPermission from "./subComponent/ModalPermission";
+import userApi from "../../apis/userApi";
+import RoleUi from "./subComponent/RoleUi";
 
 const Users = () => {
   const theme = useTheme();
@@ -41,11 +42,17 @@ const Users = () => {
   const handleOnClose = async () => {
     setIsOpen(false);
     setOpenModalPermission(false);
+    dispatch(fetchUser());
   }
 
   const handleShowPermission = async (data) => {
     setUserSelection(data);
     setOpenModalPermission(true);
+  }
+
+  const handleDelete = async (id) => {
+    await userApi.deleteUser(id);
+    dispatch(fetchUser())
   }
 
   const columns = [
@@ -55,7 +62,7 @@ const Users = () => {
     {
       field: "access",
       headerName: "Access",
-      flex: 1,
+      flex: 2,
       renderCell: (params) => {
         return (
           <Box
@@ -67,14 +74,9 @@ const Users = () => {
             justifyContent="center"
             alignContent="center"
             padding="5px"
-            width="100px"
+            width="200px"
           >
-            {!params.row.is_admin && <PersonIcon />}
-            {params.row.is_admin && <AdminPanelSettingsIcon />}
-            <Typography>
-              {!params.row.is_admin && "User"}
-              {params.row.is_admin && "Admin"}
-            </Typography>
+           <RoleUi userId={params.id} />
           </Box>
         );
       },
@@ -88,15 +90,15 @@ const Users = () => {
         <GridActionsCellItem
             icon={<Update />}
             label="Cập nhật"
-            disabled={ _checkPermission('UPDATE_USER', currentUser.Permissions)} 
+            // disabled={ _checkPermission('UPDATE_USER', currentUser.Permissions)} 
             onClick={() => handleUpdate(params.row)}
             showInMenu
         />,
         <GridActionsCellItem
             icon={<Delete />}
             label="Xóa"
-            disabled={ _checkPermission('DELETE_USER', currentUser.Permissions)} 
-            // onClick={duplicateUser(params.id)}
+            // disabled={ _checkPermission('DELETE_USER', currentUser.Permissions)} 
+            onClick={() => handleDelete(params.row.id)}
             showInMenu
         />,
         <GridActionsCellItem
@@ -114,9 +116,7 @@ const Users = () => {
   return (
     <Box m="10px">
       <Header title="Users" subtitle="Manager Users" />
-      { _checkPermission('ADD_USER', currentUser.Permissions) &&
-        (<Button sx={{backgroundColor: colors.greenAccent[600], margin: '10px 5px'}} variant="contained">Tạo mới</Button>)
-      }
+        <Button sx={{backgroundColor: colors.greenAccent[600], margin: '10px 5px'}} onClick={()=>setIsOpen(true)} variant="contained">Tạo mới</Button>
       <Box 
         height="75vh"
         sx={{

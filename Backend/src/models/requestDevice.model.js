@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false
 			},
 			department_to: {
+        type: DataTypes.BOOLEAN,
 				allowNull: false
 			}
     },

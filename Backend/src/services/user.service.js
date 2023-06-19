@@ -77,6 +77,8 @@ const hasPermission = async (id, permission) => {
       return false;
     });
 };
+
+
 exports.checkAccessPermission = async (userId, permission) => {
   return await isRoot(userId) ||await isAdmin(userId) ||await hasPermission(userId, permission);
 };

@@ -13,7 +13,7 @@ import { tokens } from "../../theme";
 import userImage from "../../assets/user.png";
 import { Link } from "react-router-dom";
 import menu from "../../constants/menu";
-import { _checkPermission, getActiveMenuName } from "../../utils";
+import { _checkRole, getActiveMenuName } from "../../utils";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
@@ -28,12 +28,9 @@ const Sidebar = () => {
   const { collapseSidebar } = useProSidebar();
   const currentUser = useSelector(state => state.authReducer.currentUser);
   const roleMenu = menu.filter((data) => {
-    return true;
+    return _checkRole(data.role, currentUser.Permissions);
   });
 
-  useEffect(() => {
-
-  }, [])
 
   const handleCollapse = () => {
     collapseSidebar();

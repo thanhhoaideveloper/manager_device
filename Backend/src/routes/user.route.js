@@ -16,5 +16,6 @@ router.get(
 );
 router.put("/:id", isAuth, isPermission("ADMIN"), UserController.update);
 router.delete("/:id", isAuth, isPermission("ADMIN"), UserController.deleted);
+router.post('/change-permission',  isAuth, isPermission("ADMIN"), UserController.changeRole)
 
 module.exports = router;
