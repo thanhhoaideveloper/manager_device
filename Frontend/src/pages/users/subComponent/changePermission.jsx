@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, useTheme } from "@mui/material";
 import { useCallback } from "react";
 import { useState } from "react";
-import deviceApi from "../../../apis/device";
+import deviceApi from "../../../apis/deviceApi";
 import { useEffect } from "react";
 import { tokens } from "../../../theme";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";

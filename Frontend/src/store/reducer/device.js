@@ -1,4 +1,4 @@
-import deviceApi from '../../apis/device';
+import deviceApi from '../../apis/deviceApi';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 import notify from "../../utils/notification";
