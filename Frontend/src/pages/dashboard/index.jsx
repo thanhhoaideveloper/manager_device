@@ -31,10 +31,10 @@ const Dashboard = () => {
             <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
             <Box sx={{margin: "10px 0"}}>
                 <Grid container spacing={2}>
-                    <GridCard xs={3} title={'Tổng số người dùng'} content={totalUser}/>
-                    <GridCard xs={3} title={'Tổng số thiết bị'} content={totalDevice}/>
-                    <GridCard xs={3} title={'Tổng số phòng ban'} content={totalDepartment}/>
-                    <GridCard xs={3} title={'Tổng số yêu cầu thêm thiết bị'} content={'200'}/>
+                    <GridCard xs={3} title="Tổng số người dùng" content={totalUser}/>
+                    <GridCard xs={3} title="Tổng số thiết bị" content={totalDevice}/>
+                    <GridCard xs={3} title="Tổng số phòng ban" content={totalDepartment}/>
+                    <GridCard xs={3} title="Tổng số yêu cầu thêm thiết bị" content={'200'}/>
                 </Grid>
             </Box>
         </Box>

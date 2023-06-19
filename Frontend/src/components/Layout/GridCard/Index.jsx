@@ -10,9 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 
-const GridCard = (props) => {
-    const {xs, title, content = {}} = props;
-
+const GridCard = ({xs, title, content}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
