@@ -13,12 +13,14 @@ import {
 
 import { useDispatch } from 'react-redux';
 import { logout } from "../../store/reducer/auth";
+import { useNavigate } from "react-router-dom";
 
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -48,7 +50,7 @@ const Topbar = () => {
             <LightModeOutlined />
           )}
         </IconButton>
-        <IconButton>
+        {/* <IconButton>
           <NotificationsOutlined />
         </IconButton>
         <IconButton>
@@ -56,7 +58,7 @@ const Topbar = () => {
         </IconButton>
         <IconButton>
           <PersonOutlineSharp />
-        </IconButton>
+        </IconButton> */}
         <IconButton onClick={handleLogout}>
           <ExitToApp />
         </IconButton>

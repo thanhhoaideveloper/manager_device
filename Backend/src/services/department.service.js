@@ -1,25 +1,25 @@
-const { Despartment, Device } = require("../models");
+const { Department, Device } = require("../models");
 
 exports.findOne = async (fields) => {
-    return await Despartment.findOne({ where: fields});
+    return await Department.findOne({ where: fields});
 }
 
 exports.findAll = async () => {
-    return Despartment.findAll();
+    return Department.findAll();
 }
 
 exports.create = async ($data) => {
-    return await Despartment.create($data);
+    return await Department.create($data);
 }
 
 exports.updated = async(data, id) => {
-    return await Despartment.update(data, { where: {id}});
+    return await Department.update(data, { where: {id}});
 }
 
 exports.deleted = async (id) => {
-    return await Despartment.findOne( {where: { id }} )
+    return await Department.findOne( {where: { id }} )
                     .then(result => {
-                        return Despartment.destroy({ where : { id }})
+                        return Department.destroy({ where : { id }})
                             .then(u => {
                                 return result;
                             })
@@ -27,5 +27,5 @@ exports.deleted = async (id) => {
 }
 
 exports.getAllDevice = async (fields) => {
-    return Despartment.findOne({ where: fields , include: Device})
+    return Department.findOne({ where: fields , include: Device})
 }

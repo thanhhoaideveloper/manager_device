@@ -28,7 +28,7 @@ const Sidebar = () => {
   const { collapseSidebar } = useProSidebar();
   const currentUser = useSelector(state => state.authReducer.currentUser);
   const roleMenu = menu.filter((data) => {
-    return _checkPermission(data.active, currentUser.Permissions);
+    return true;
   });
 
   useEffect(() => {

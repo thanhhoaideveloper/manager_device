@@ -1,3 +1,4 @@
+const { user } = require("../config/db.config");
 const { User, Permission } = require("../models");
 
 exports.findOne = async (fields) => {
@@ -24,22 +25,6 @@ exports.deleted = async (id) => {
   });
 };
 
-exports.hasPermission = async (id,permission) => {
-	return await User
-		.findOne({
-			where: { id },
-			include: {
-				model: Permission,
-				where: { name: permission }
-			}
-		})
-		.then((data) => {
-			return true;
-		})
-		.catch((err) => {
-			return false;
-		});
-}
 exports.listPermission = async (id) => {
 	return await User
 		.findOne({
@@ -55,3 +40,43 @@ exports.listPermission = async (id) => {
 			return false;
 	})
 }
+
+const isRoot = async (userId) => {
+  return await User.findOne({
+    where: {
+      id: userId,
+      is_root: 1,
+    },
+  })
+		.then((res) => {
+			if(!res) return false
+      return true;
+    })
+    .catch((err) => {
+      return false;
+    });
+};
+
+const isAdmin = async (userId) => {
+  return await hasPermission(userId, "ADMIN");
+};
+
+const hasPermission = async (id, permission) => {
+  return await User.findOne({
+    where: { id },
+    include: {
+      model: Permission,
+      where: { name: permission },
+    },
+  })
+		.then((data) => {
+			if(!data) return false
+      return true;
+    })
+    .catch((err) => {
+      return false;
+    });
+};
+exports.checkAccessPermission = async (userId, permission) => {
+  return await isRoot(userId) ||await isAdmin(userId) ||await hasPermission(userId, permission);
+};

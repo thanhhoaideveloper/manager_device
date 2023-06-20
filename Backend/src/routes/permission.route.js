@@ -5,20 +5,30 @@ const PermissionController = require("../controllers/permission.controller");
 const { isAuth } = require("../middlewares/auth.middleware");
 const { isPermission } = require("../middlewares/access.middleware");
 
-router.get('/', isAuth, isPermission("GET_LIST_PERMISSION"), PermissionController.getAllPermission);
+router.get(
+  "/",
+  isAuth,
+  isPermission("ADMIN"),
+  PermissionController.getAllPermission
+);
 router.post(
   "/",
   isAuth,
-  isPermission("ADD_PERMISSION"),
+  isPermission("ADMIN"),
   PermissionController.addPermission
 );
 router.delete(
   "/",
   isAuth,
-  isPermission("DELETE_PERMISSION"),
+  isPermission("ADMIN"),
   PermissionController.addPermission
 );
-router.put('', isAuth, isPermission("UPDATE_PERMISSION"), PermissionController.updatePermission);
+router.put(
+  "",
+  isAuth,
+  isPermission("ADMIN"),
+  PermissionController.updatePermission
+);
 
 
 module.exports = router;

@@ -71,6 +71,7 @@ async function getOneUserHasPermission(req, res, next) {
 	if (!user) return res.status(401).send({ message: "Not found user" });
 	return res.status(200).send(user);
 }
+
 module.exports = {
 	getAll,
 	getOne,
