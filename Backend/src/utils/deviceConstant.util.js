@@ -8,8 +8,13 @@ const status = {
 	USING: "using",
 	NO_USING: "no using"
 
-	//user's device
 }
+
+const type = {
+	DECREASE:"decrease",
+	INCREASE:"increase"
+};
 module.exports = {
-	status
+	status,
+	type
 };

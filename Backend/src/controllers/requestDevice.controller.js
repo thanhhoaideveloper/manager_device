@@ -1,5 +1,6 @@
 const requestDevice = require("../services/requestDevice.service");
-const statusCons = require("../utils/requestConstant.utils").status;
+const utils = require("../utils/requestConstant.utils");
+const { type } = require("../utils/deviceConstant.util");
 const deviceDepartment = require("../services/departmentDevice.service");
 
 async function getAll(req, res, next) {
@@ -35,7 +36,7 @@ async function create(req, res, next) {
 			quantity,
 			department_from,
 			department_to,
-			status: statusCons.PENDING
+			status: utils.status.PENDING
     });
     if (!requestCreated) {
 			res.status(500).send({
@@ -55,12 +56,13 @@ async function updateStatus(req, res, next) {
 	const checkRequest = requestDevice.findOne({ id });
 	if (!checkRequest) return res.status(500).send({ message: "Not found request" });
 	const result = null;
-	if (status == statusCons.APPROVE) {
-		result = await requestDevice.updated({ status: statusCons.APPROVE }, id);
+	if (status == utils.status.APPROVE) {
+		result = await requestDevice.updated({ status: utils.status.APPROVE }, id);
 		await deviceDepartment.updateQuantity(
       result.quantity,
       result.device_id,
-      result.department_from
+			result.department_from,
+			type.DECREASE
 		);
 		const checkHasDeviceAndDepartmentTo = await deviceDepartment.getOne({
 			device_id: result.device_id,
@@ -68,9 +70,10 @@ async function updateStatus(req, res, next) {
 		});
 		if (checkHasDeviceAndDepartmentTo) {
 			await deviceDepartment.updateQuantity(
-        -result.quantity,
+        result.quantity,
         result.device_id,
-        result.department_to
+				result.department_to,
+				type.INCREASE
       );
 		}
 		else {
@@ -81,9 +84,9 @@ async function updateStatus(req, res, next) {
       });
 		}
 	}
-	else if (status == statusCons.DONE) {
-		result = await requestDevice.updated({ status: statusCons.DONE }, id);
-	}
+	else if (status == utils.status.DONE) {
+    result = await requestDevice.updated({ status: utils.statusDONE }, id);
+  }
 		return res.status(200).send(result);
 	}
 	catch (err) {

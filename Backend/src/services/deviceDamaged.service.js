@@ -4,11 +4,8 @@ exports.findOne = async (fields) => {
   return await DeviceDamaged.findOne({ where: fields });
 };
 
-exports.findAll = async (filter) => {
-  if (!filter.is_active) {
-    return DeviceDamaged.findAll();
-  }
-  return DeviceDamaged.findAll({ where: filter });
+exports.findAll = async () => {
+  return DeviceDamaged.findAll();
 };
 
 exports.create = async (data) => {
