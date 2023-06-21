@@ -1,5 +1,5 @@
 const { DeviceDepartment } = require("../models");
-
+const { type } = require("../utils/deviceConstant.util");
 
 exports.findAll = async () => {
     return await DeviceDepartment.findAll()
@@ -25,7 +25,7 @@ exports.getOne = async (fields) => {
 //     return await Department.update(data, { where: {id}});
 // }
 
-exports.updateQuantity = async (quantity, device_id, department_id) => {
+exports.updateQuantity = async (quantity, device_id, department_id, typeN) => {
 	return await DeviceDepartment.findOne({
     where: {
       device_id,
@@ -33,9 +33,13 @@ exports.updateQuantity = async (quantity, device_id, department_id) => {
     },
   })
 		.then((result) => {
+			const quantityNew =
+        (typeN == type.INCREASE)
+          ? (result.quantity + quantity)
+          : (result.quantity - quantity);
       return DeviceDepartment.update(
         {
-          quantity: result.quantity - quantity,
+          quantity: quantityNew,
         },
         {
           where: {
