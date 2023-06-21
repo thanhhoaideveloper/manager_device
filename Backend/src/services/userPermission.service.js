@@ -43,13 +43,10 @@ exports.create = async (userId, permissionId) => {
 	}
 };
 exports.delete = async (userId, permissionId) => {
-	const userPermission = await UserPermission.findOne({
-		where: {
-			user_id: userId,
-			permission_id: permissionId
-		}
-	});
-	return await userPermission.destroy();
+	return await UserPermission.destroy({where : {
+		user_id: userId,
+		permission_id: permissionId
+	}});
 }
 
 exports.update = async (userId, listDelete, listCreate) => {
