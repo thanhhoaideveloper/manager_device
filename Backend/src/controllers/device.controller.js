@@ -11,7 +11,7 @@ async function getAll(req, res){
 async function getOne(req, res) {
     const { id } = req.params;
     const result = await deviceService.findOne({ id });
-    
+
     if(!result){
         res.status(404).send({
             message: "Device Not found!"
@@ -53,7 +53,7 @@ async function deleted(req, res, next){
         if(!result){
             return next(new HttpException(404, "Device not found!"));
         }
-        res.status(200).send(result); 
+        res.status(200).send(result);
     }catch(err){
         next(new HttpException(500, err.errors[0].message));
     }

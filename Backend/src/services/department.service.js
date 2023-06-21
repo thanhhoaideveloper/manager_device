@@ -29,3 +29,10 @@ exports.deleted = async (id) => {
 exports.getAllDevice = async (fields) => {
     return Department.findOne({ where: fields , include: Device})
 }
+
+exports.updateDeviceCount = async (id, number, type) => {
+	const find = await this.findOne({ id });
+	if (!find) return false;
+	const deviceCount = (type == "increase") ? (find.device_count + number) : (find.device_count - number);
+	return await this.updated({ device_count: deviceCount }, id);
+}
