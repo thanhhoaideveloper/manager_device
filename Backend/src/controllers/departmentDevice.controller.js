@@ -14,9 +14,9 @@ async function findAll(req, res, next){
 
 async function create(req, res, next) {
     try{
-        const { department_id, deviceId } = req.body;
+        const { department_id, device_id } = req.body;
         const now = new Date();
-        deviceId.forEach(async item => {
+        device_id.forEach(async item => {
             const formData = {
                 department_id: department_id,
                 device_id: item,
@@ -24,6 +24,7 @@ async function create(req, res, next) {
                 received_date: now
             }
             const deviceDepartment = await departmentDeviceService.getOne({department_id, device_id: item});
+            console.log((deviceDepartment));
             if(deviceDepartment){
                 await departmentDeviceService.plusQuantity({ quantity: deviceDepartment.quantity + 1}, {department_id, device_id: item});
             }else{

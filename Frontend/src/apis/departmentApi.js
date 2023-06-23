@@ -22,6 +22,7 @@ const departmentApi = {
         return axiosClient.get(`/department/${id}/get-device`);
     },
     addDevice: (formData) => {
+        console.log('formData',formData)
         return axiosClient.post('/department/add-device', formData);
     },
     removeDevice: (formData) => {

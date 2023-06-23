@@ -48,7 +48,7 @@ User.belongsToMany(Permission, { through: 'UserPermission', onDelete: 'cascade',
 User.hasMany(RequestDevice, { foreignKey: "user_id" });
 RequestDevice.belongsTo(User, { foreignKey: "user_id" });
 
-sequelize.sync({ force: true }).then(()=>{
+sequelize.sync({ force: false }).then(()=>{
 	console.log('Connect DB successfully!');
 
 	// Create data seeding

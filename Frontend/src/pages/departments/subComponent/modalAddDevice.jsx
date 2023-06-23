@@ -33,7 +33,7 @@ const ModalAddDevice = (props) => {
 
     const handleSubmit = async () => {
         const inputs = {
-            despartment_id: despartmentId,
+            department_id: despartmentId,
             device_id: deviceSelection
         };
 
