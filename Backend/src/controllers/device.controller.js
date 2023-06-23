@@ -24,6 +24,7 @@ async function getOne(req, res) {
 async function create(req, res, next) {
     try{
         const formData = req.body;
+        formData.status = 1;
         const result = await deviceService.create(formData);
         res.status(201).send(result);
     }catch(err){

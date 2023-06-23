@@ -28,9 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
       },
-      status: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      is_active: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1
       },
       category_id: {
         type: DataTypes.INTEGER,

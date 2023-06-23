@@ -2,30 +2,30 @@ import axiosClient from './axosClient';
 
 const departmentApi = {
     getListDepartment: () => {
-        return axiosClient.get('/despartment');
+        return axiosClient.get('/department');
     },
     getOne: (id) => {
-        return axiosClient.patch(`/despartment/${id}`)
+        return axiosClient.patch(`/department/${id}`)
     },
     create: (body) => {
-        return axiosClient.post('/despartment',{...body});
+        return axiosClient.post('/department',{...body});
     },
     update: (body) => {
         const {id} = body;
-        return axiosClient.put(`/despartment/${id}`,{...body});
+        return axiosClient.put(`/department/${id}`,{...body});
     },
     deleteApi : (body) => {
         const {id} = body;
-        return axiosClient.delete(`/despartment/${id}`);
+        return axiosClient.delete(`/department/${id}`);
     },
     getDevice: (id) => {
-        return axiosClient.get(`/despartment/${id}/get-device`);
+        return axiosClient.get(`/department/${id}/get-device`);
     },
     addDevice: (formData) => {
-        return axiosClient.post('/despartment/add-device', formData);
+        return axiosClient.post('/department/add-device', formData);
     },
     removeDevice: (formData) => {
-        return axiosClient.post('/despartment/remove-device', formData);
+        return axiosClient.post('/department/remove-device', formData);
     }
 }
 

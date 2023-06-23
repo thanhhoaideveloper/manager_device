@@ -2,7 +2,7 @@ import axiosClient from './axosClient';
 
 const deviceApi = {
     getListDevice: (filter = {}) => {
-        return axiosClient.post('/device/get-list', filter);
+        return axiosClient.get('/device/get-list', filter);
     },
     create: (body) => {
         return axiosClient.post('/device',{...body});
