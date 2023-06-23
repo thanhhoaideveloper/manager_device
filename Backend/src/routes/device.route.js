@@ -6,7 +6,7 @@ const { isAuth } = require("../middlewares/auth.middleware");
 const { isPermission } = require("../middlewares/access.middleware");
 
 router.get(
-  "",
+  "/get-list",
   isAuth,
   isPermission("DEVICE_MANAGEMENT"),
   deviceController.getAll

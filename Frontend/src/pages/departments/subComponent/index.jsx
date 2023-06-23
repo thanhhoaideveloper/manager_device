@@ -34,6 +34,7 @@ const ModalSubDevices = (props) => {
     })
 
     const handleSubmitForm = async (props) => {
+        console.log('props',props)
         if(checkFormUpdate){
             await dispatch(update({...props, id : data.id}));
         }
