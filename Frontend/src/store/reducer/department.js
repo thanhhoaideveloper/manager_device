@@ -53,7 +53,7 @@ export const deleted = createAsyncThunk(
     }
 )
 
-const users = createSlice({
+const departments = createSlice({
     name: "departments",
     initialState,
     extraReducers: (builder) => {
@@ -63,4 +63,4 @@ const users = createSlice({
     }
 })
 
-export default users.reducer;
+export default departments.reducer;
